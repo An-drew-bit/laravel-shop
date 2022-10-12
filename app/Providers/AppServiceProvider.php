@@ -6,6 +6,7 @@ use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,13 @@ class AppServiceProvider extends ServiceProvider
 
         DB::whenQueryingForLongerThan(500, function (Connection $connection) {
             // Notify development team...
+        });
+
+        Password::defaults(function() {
+            return Password::min(8)
+                ->letters()
+                ->uncompromised()
+                ->numbers();
         });
     }
 }
