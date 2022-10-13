@@ -10,12 +10,13 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Str;
 
 class RegisteredController extends Controller
 {
     public function show(): Application|Factory|View
     {
-        return view('');
+        return view('front.auth.registered');
     }
 
     public function store(RegisteredRequest $request): RedirectResponse
@@ -24,6 +25,7 @@ class RegisteredController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'remember_token' => Str::random(40)
         ]);
 
         if ($user) {
@@ -31,9 +33,9 @@ class RegisteredController extends Controller
 
             auth('web')->login($user);
 
-            return to_route('');
+            return to_route('home');
         }
 
-        return to_route('')->with(trans('auth.success_registered'));
+        return to_route('login')->with('success', trans('auth.success_registered'));
     }
 }

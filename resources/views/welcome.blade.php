@@ -10,5 +10,13 @@
     </head>
     <body class="antialiased">
 
+        <h1>Home</h1>
+        @guest
+            <a href="{{ route('login') }}">Логин</a>
+        @endguest
+        @auth
+            <h1>Ты зареган</h1>
+            <a href="{{ route('logout') }}">Выйти</a>
+        @endauth
     </body>
 </html>

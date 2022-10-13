@@ -14,7 +14,7 @@ class AuthenticatedController extends Controller
 {
     public function show(): Application|Factory|View
     {
-        return view('');
+        return view('front.auth.login');
     }
 
     public function store(LoginRequest $request): RedirectResponse
@@ -23,7 +23,7 @@ class AuthenticatedController extends Controller
 
         $request->session()->regenerate();
 
-        return to_route('')->with(trans('auth.success_login'));
+        return to_route('home')->with('success', trans('auth.success_login'));
     }
 
     public function logout(Request $request): RedirectResponse
@@ -34,6 +34,6 @@ class AuthenticatedController extends Controller
 
         $request->session()->regenerateToken();
 
-        return to_route('');
+        return to_route('home');
     }
 }

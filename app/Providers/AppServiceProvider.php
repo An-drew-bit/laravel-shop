@@ -34,11 +34,10 @@ class AppServiceProvider extends ServiceProvider
             // Notify development team...
         });
 
-        Password::defaults(function() {
-            return Password::min(8)
-                ->letters()
-                ->uncompromised()
-                ->numbers();
-        });
+        Password::defaults(fn() => Password::min(8)
+            ->letters()
+            ->uncompromised()
+            ->numbers()
+        );
     }
 }
