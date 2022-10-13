@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\RegisteredController;
 use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +30,16 @@ Route::middleware('guest')->group(function () {
     Route::controller(AuthenticatedController::class)->group(function () {
         Route::get('/login', 'show')->name('login');
         Route::post('/login', 'store')->name('login.store');
+    });
+
+    Route::controller(ForgotPasswordController::class)->group(function () {
+        Route::get('/forgot', 'show')->name('forgot');
+        Route::post('/forgot', 'update')->name('forgot.update');
+    });
+
+    Route::controller(NewPasswordController::class)->group(function () {
+        Route::get('/reestablish', 'show')->name('reestablish.show');
+        Route::post('/reestablish', 'reestablish')->name('reestablish.reestablish');
     });
 });
 
