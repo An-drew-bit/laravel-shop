@@ -14,7 +14,7 @@ class VerificationController extends Controller
 {
     public function getVerifyForm(): Application|Factory|View
     {
-        return view('auth.verify-email');
+        return view('front.auth.verify-email');
     }
 
     public function verifycationRequest(EmailVerificationRequest $request): RedirectResponse

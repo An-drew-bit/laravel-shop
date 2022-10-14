@@ -29,11 +29,11 @@ class RegisteredController extends Controller
         ]);
 
         if ($user) {
-            //event(new Registered($user));
+            event(new Registered($user));
 
             auth('web')->login($user);
 
-            return to_route('home');
+            return to_route('verification.notice');
         }
 
         return to_route('login')->with('success', trans('auth.success_registered'));

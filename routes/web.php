@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(VerificationController::class)->group(function () {
     Route::get('/email/verify', 'getVerifyForm')
-        ->middleware('auth', 'signed')
+        ->middleware('auth')
         ->name('verification.notice');
 
     Route::get('/email/verify/{id}/{hash}', 'verifycationRequest')
@@ -43,7 +43,10 @@ Route::middleware('guest')->group(function () {
     });
 });
 
-Route::get('/logout', [AuthenticatedController::class, 'logout'])->name('logout');
+Route::middleware('auth')->group(function () {
+    Route::get('/logout', [AuthenticatedController::class, 'logout'])->name('logout');
+});
+
 
 Route::get('/', function () {
     return view('welcome');
