@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class NewPasswordRequest extends FormRequest
+class EditProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,16 +25,17 @@ class NewPasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'current' => ['required', 'current_password'],
-            'password' => ['required', 'confirmed', Password::default()]
+            'name' => ['required', 'string'],
+            'email' => ['required', 'email', 'string', 'unique:users'],
+            'password' => ['required', 'confirmed', Password::default()],
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'current' => trans('passwords.current'),
-            'password' => trans('passwords.password')
+            'password' => trans('passwords.current'),
+            'password_confirmation' => trans('passwords.password')
         ];
     }
 }

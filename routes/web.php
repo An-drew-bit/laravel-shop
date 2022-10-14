@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\RegisteredController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(VerificationController::class)->group(function () {
@@ -44,10 +45,13 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/profile/{user}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
     Route::get('/logout', [AuthenticatedController::class, 'logout'])->name('logout');
 });
 
-
+// временно
 Route::get('/', function () {
-    return view('welcome');
+    return view('front.home');
 })->name('home');

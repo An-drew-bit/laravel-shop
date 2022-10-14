@@ -20,4 +20,10 @@ class UserBuilder implements QueryBuilder
             ->where('email', $email)
             ->firstOrFail();
     }
+
+    public function getUserById(int $id): Model
+    {
+        return $this->getBuilder()
+            ->findOrFail($id);
+    }
 }
