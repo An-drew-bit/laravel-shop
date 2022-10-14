@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Services\Socialite\Contract\Social;
+use App\Services\Socialite\SocialService;
 use Carbon\CarbonInterval;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(Social::class, SocialService::class);
     }
 
     /**

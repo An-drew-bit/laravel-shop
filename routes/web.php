@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthenticatedController;
+use App\Http\Controllers\Auth\AuthSocialController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\RegisteredController;
@@ -23,22 +24,27 @@ Route::controller(VerificationController::class)->group(function () {
 });
 
 Route::middleware('guest')->group(function () {
-    Route::controller(RegisteredController::class)->group(function () {
+    Route::controller(RegisteredController::class)->group(function() {
         Route::get('/registered', 'show')->name('registered');
         Route::post('/registered', 'store')->name('registered.store');
     });
 
-    Route::controller(AuthenticatedController::class)->group(function () {
+    Route::controller(AuthenticatedController::class)->group(function() {
         Route::get('/login', 'show')->name('login');
         Route::post('/login', 'store')->name('login.store');
     });
 
-    Route::controller(ForgotPasswordController::class)->group(function () {
+    Route::controller(AuthSocialController::class)->group(function() {
+        Route::get('/auth/{driver}/redirect', 'redirect')->name('social.redirect');
+        Route::get('/auth/{driver}/callback', 'callback')->name('social.callback');
+    });
+
+    Route::controller(ForgotPasswordController::class)->group(function() {
         Route::get('/forgot', 'show')->name('forgot');
         Route::post('/forgot', 'update')->name('forgot.update');
     });
 
-    Route::controller(NewPasswordController::class)->group(function () {
+    Route::controller(NewPasswordController::class)->group(function() {
         Route::get('/reestablish', 'show')->name('reestablish.show');
         Route::post('/reestablish', 'reestablish')->name('reestablish.reestablish');
     });
