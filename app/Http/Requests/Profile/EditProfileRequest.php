@@ -25,16 +25,16 @@ class EditProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'email' => ['required', 'email', 'string', 'unique:users'],
-            'password' => ['required', 'confirmed', Password::default()],
+            'name' => ['nullable', 'string'],
+            'email' => ['nullable', 'email', 'string', 'unique:users'],
+            'password' => ['nullable', 'confirmed', Password::default()],
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'password' => trans('passwords.current'),
+            'password' => __('passwords.current'),
             'password_confirmation' => __('passwords.password')
         ];
     }
