@@ -35,7 +35,7 @@ class EditProfileRequest extends FormRequest
     {
         return [
             'password' => trans('passwords.current'),
-            'password_confirmation' => trans('passwords.password')
+            'password_confirmation' => __('passwords.password')
         ];
     }
 }

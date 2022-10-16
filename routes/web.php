@@ -35,6 +35,7 @@ Route::middleware('guest')->group(function () {
     });
 
     Route::controller(AuthSocialController::class)->group(function() {
+        Route::get('/auth/social', 'show')->name('social');
         Route::get('/auth/{driver}/redirect', 'redirect')->name('social.redirect');
         Route::get('/auth/{driver}/callback', 'callback')->name('social.callback');
     });

@@ -24,6 +24,6 @@ class NewPasswordController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        return to_route('home')->with('success', trans('passwords.reset'));
+        return to_route('home')->with('success', __('passwords.reset'));
     }
 }

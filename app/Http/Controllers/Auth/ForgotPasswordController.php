@@ -10,19 +10,18 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\URL;
 
 class ForgotPasswordController extends Controller
 {
     public function show(): Application|Factory|View
     {
-        return view('front.auth.forgot');
+        return view('front.auth.lost-password');
     }
 
     public function update(ForgotPasswordRequest $request, UserBuilder $builder): RedirectResponse
     {
         $user = $builder->getUserByEmail($request->email);
-        $url = URL::to('/') . bcrypt('reestablish');
+        $url = url()->to('/') . bcrypt('reestablish');
 
         dispatch(new ForgotPasswordJob($user, $url));
 

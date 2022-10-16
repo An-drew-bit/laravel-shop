@@ -28,6 +28,6 @@ class VerificationController extends Controller
     {
         $request->user()->sendEmailVerificationNotification();
 
-        return back()->with('message', trans('email-verification.repeat'));
+        return back()->with('message', __('email-verification.repeat'));
     }
 }
