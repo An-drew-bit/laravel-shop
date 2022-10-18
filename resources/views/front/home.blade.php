@@ -47,16 +47,12 @@
 
                 <!-- Categories -->
                 <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-5 mt-8">
-                    <a href="catalog.html" class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Мыши</a>
-                    <a href="catalog.html" class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Клавиатуры</a>
-                    <a href="catalog.html" class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Наушники</a>
-                    <a href="catalog.html" class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Поверхности</a>
-                    <a href="catalog.html" class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Мониторы</a>
-                    <a href="catalog.html" class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Геймпады</a>
-                    <a href="catalog.html" class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Консоли</a>
-                    <a href="catalog.html" class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Акустика</a>
-                    <a href="catalog.html" class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Аксесуары</a>
-                    <a href="catalog.html" class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Распродажа</a>
+                    @foreach($categories as $category)
+                        <a href="{{-- route('category', ['slug' => $category->slug]) --}}"
+                           class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">
+                            {{ $category->title }}
+                        </a>
+                    @endforeach
                 </div>
             </section>
 
@@ -77,7 +73,7 @@
                 </div>
 
                 <div class="mt-12 text-center">
-                    <a href="catalog.html" class="btn btn-purple">Все товары &nbsp;→</a>
+                    <a href="catalog.html" class="btn btn-purple">Все товары&nbsp;→</a>
                 </div>
             </section>
 
@@ -87,42 +83,14 @@
 
                 <!-- Brands list -->
                 <div class="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-6 gap-4 md:gap-8 mt-12">
-                    <a href="catalog.html" class="p-6 rounded-xl bg-card hover:bg-card/60">
-                        <div class="h-12 md:h-16">
-                            <img src="./images/brands/1.png" class="object-contain w-full h-full" alt="Steelseries">
-                        </div>
-                        <div class="mt-8 text-xs sm:text-sm lg:text-md font-semibold text-center">Steelseries</div>
-                    </a>
-                    <a href="catalog.html" class="p-6 rounded-xl bg-card hover:bg-card/60">
-                        <div class="h-12 md:h-16">
-                            <img src="./images/brands/2.png" class="object-contain w-full h-full" alt="Razer">
-                        </div>
-                        <div class="mt-8 text-xs sm:text-sm lg:text-md font-semibold text-center">Razer</div>
-                    </a>
-                    <a href="catalog.html" class="p-6 rounded-xl bg-card hover:bg-card/60">
-                        <div class="h-12 md:h-16">
-                            <img src="./images/brands/3.png" class="object-contain w-full h-full" alt="Logitech">
-                        </div>
-                        <div class="mt-8 text-xs sm:text-sm lg:text-md font-semibold text-center">Logitech</div>
-                    </a>
-                    <a href="catalog.html" class="p-6 rounded-xl bg-card hover:bg-card/60">
-                        <div class="h-12 md:h-16">
-                            <img src="./images/brands/4.png" class="object-contain w-full h-full" alt="HyperX">
-                        </div>
-                        <div class="mt-8 text-xs sm:text-sm lg:text-md font-semibold text-center">HyperX</div>
-                    </a>
-                    <a href="catalog.html" class="p-6 rounded-xl bg-card hover:bg-card/60">
-                        <div class="h-12 md:h-16">
-                            <img src="./images/brands/5.png" class="object-contain w-full h-full" alt="Playstation">
-                        </div>
-                        <div class="mt-8 text-xs sm:text-sm lg:text-md font-semibold text-center">Playstation</div>
-                    </a>
-                    <a href="catalog.html" class="p-6 rounded-xl bg-card hover:bg-card/60">
-                        <div class="h-12 md:h-16">
-                            <img src="./images/brands/6.png" class="object-contain w-full h-full" alt="XBOX">
-                        </div>
-                        <div class="mt-8 text-xs sm:text-sm lg:text-md font-semibold text-center">XBOX</div>
-                    </a>
+                    @foreach($brands as $brand)
+                        <a href="catalog.html" class="p-6 rounded-xl bg-card hover:bg-card/60">
+                            <div class="h-12 md:h-16">
+                                <img src="{{-- route('brand', ['slug' => $brand->slug]) --}}" class="object-contain w-full h-full" alt="Steelseries">
+                            </div>
+                            <div class="mt-8 text-xs sm:text-sm lg:text-md font-semibold text-center">{{ $brand->title }}</div>
+                        </a>
+                    @endforeach
                 </div>
             </section>
 

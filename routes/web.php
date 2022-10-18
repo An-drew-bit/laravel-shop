@@ -6,8 +6,11 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\RegisteredController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/', HomeController::class)->name('home');
 
 Route::controller(VerificationController::class)->group(function () {
     Route::get('/email/verify', 'getVerifyForm')
@@ -57,8 +60,3 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/logout', [AuthenticatedController::class, 'logout'])->name('logout');
 });
-
-// временно
-Route::get('/', function () {
-    return view('front.home');
-})->name('home');

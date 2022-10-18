@@ -2,7 +2,8 @@
 
 namespace App\Logging\Telegram;
 
-use App\Services\Telegram\TelegramBotApi;
+use App\Jobs\TelegramLoggerJob;
+use Illuminate\Support\Facades\Schema;
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Logger;
 
@@ -23,6 +24,8 @@ class TelegramLoggerHandler extends AbstractProcessingHandler
 
     protected function write(array $record): void
     {
-        TelegramBotApi::sendMessage($this->token, $this->chatId, $record['formatted']);
+        if (Schema::hasTable('job')) {
+            dispatch(new TelegramLoggerJob($this->token, $this->chatId, $record['formatted']));
+        }
     }
 }
