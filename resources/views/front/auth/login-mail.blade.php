@@ -18,6 +18,11 @@
             <input type="password" name="password"
                    class="w-full h-14 px-4 rounded-lg border border-[#A07BF0] bg-white/20 focus:border-pink focus:shadow-[0_0_0_2px_#EC4176] outline-none transition text-white placeholder:text-white text-xxs md:text-xs font-semibold"
                    placeholder="Пароль" required>
+            <div class="form-checkbox">
+                <input type="checkbox" name="remember" id="filters-item-1">
+                <label for="filters-item-1" class="form-checkbox-label">{{ __('auth.remember') }}</label>
+            </div>
+
             <button type="submit" class="w-full btn btn-pink">Войти</button>
         </form>
         <div class="space-y-3 mt-5">

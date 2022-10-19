@@ -18,12 +18,12 @@ final class TelegramBotApi
                 'text' => $text
             ]);
 
-            return true;
-
         } catch (\Exception $exception) {
-            echo 'Произошла ошибка:' . $exception->getMessage();
+            print 'Произошла ошибка:' . $exception->getMessage();
 
             return false;
         }
+
+        return true;
     }
 }

@@ -4,6 +4,7 @@
 ```
 {%project_folder%}: cp ./env.example ./.env
 {%project_folder%}: composer install
+{%project_folder%}: npm install
 {%project_folder%}: php artisan shop:install
 ```
 

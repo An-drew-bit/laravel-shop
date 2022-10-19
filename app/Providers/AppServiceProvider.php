@@ -31,19 +31,23 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Model::preventLazyLoading(!app()->isProduction());
-        Model::preventSilentlyDiscardingAttributes(!app()->isProduction());
+        Model::shouldBeStrict(!app()->isProduction());
 
-        DB::whenQueryingForLongerThan(500, fn(Connection $connection) => logger()
-                ->channel('telegram')
-                ->debug('whenQueryingForLongerThan:' . $connection->query()->toSql()));
+        if (app()->isProduction()) {
+            DB::listen(function ($query) {
+                if ($query->time > 10) {
+                    logger()->channel('telegram')
+                        ->debug('whenQueryingForLongerThan:' . $query->sql, $query->bindings);
+                }
+            });
 
-        $kernel = app(Kernel::class);
+            $kernel = app(Kernel::class);
 
-        $kernel->whenRequestLifecycleIsLongerThan(
-            CarbonInterval::seconds(4), fn() => logger()
+            $kernel->whenRequestLifecycleIsLongerThan(
+                CarbonInterval::seconds(4), fn() => logger()
                 ->channel('telegram')
                 ->debug('whenRequestLifecycleIsLongerThan:' . request()->url()));
+        }
 
         Password::defaults(fn() => Password::min(8)
             ->letters()

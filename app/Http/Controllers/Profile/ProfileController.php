@@ -21,7 +21,7 @@ class ProfileController extends Controller
 
     public function update(EditProfileRequest $request, UserBuilder $builder): RedirectResponse
     {
-        $user = $builder->getUserById(auth()->user()->id);
+        $user = $builder->getUserByEmail($request->email);
 
         $user->update([
             'name' => $request->name,
