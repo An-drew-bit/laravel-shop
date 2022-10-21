@@ -14,21 +14,11 @@ use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
     public function register(): void
     {
         $this->app->bind(Social::class, SocialService::class);
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
     public function boot(): void
     {
         Model::shouldBeStrict(!app()->isProduction());
@@ -41,9 +31,7 @@ class AppServiceProvider extends ServiceProvider
                 }
             });
 
-            $kernel = app(Kernel::class);
-
-            $kernel->whenRequestLifecycleIsLongerThan(
+            app(Kernel::class)->whenRequestLifecycleIsLongerThan(
                 CarbonInterval::seconds(4), fn() => logger()
                 ->channel('telegram')
                 ->debug('whenRequestLifecycleIsLongerThan:' . request()->url()));
