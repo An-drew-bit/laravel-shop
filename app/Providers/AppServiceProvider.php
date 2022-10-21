@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\Services\Socialite\Contract\Social;
 use App\Services\Socialite\SocialService;
 use Carbon\CarbonInterval;
-use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\Kernel;
 use Illuminate\Support\Facades\DB;
