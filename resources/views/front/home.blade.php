@@ -84,9 +84,9 @@
                 <!-- Brands list -->
                 <div class="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-6 gap-4 md:gap-8 mt-12">
                     @foreach($brands as $brand)
-                        <a href="catalog.html" class="p-6 rounded-xl bg-card hover:bg-card/60">
+                        <a href="{{-- route('brand', ['slug' => $brand->slug]) --}}" class="p-6 rounded-xl bg-card hover:bg-card/60">
                             <div class="h-12 md:h-16">
-                                <img src="{{-- route('brand', ['slug' => $brand->slug]) --}}" class="object-contain w-full h-full" alt="Steelseries">
+                                <img src="{{-- $brand->thumbnail --}}" class="object-contain w-full h-full" alt="Steelseries">
                             </div>
                             <div class="mt-8 text-xs sm:text-sm lg:text-md font-semibold text-center">{{ $brand->title }}</div>
                         </a>

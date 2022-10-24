@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 
+//временно
+Route::get('/catalog', function () {
+    return view('front.catalog.catalog');
+})->name('catalog');
+
 Route::controller(VerificationController::class)->group(function () {
     Route::get('/email/verify', 'getVerifyForm')
         ->middleware('auth')

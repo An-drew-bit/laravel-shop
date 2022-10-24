@@ -37,4 +37,22 @@ class RegisteredPageTest extends TestCase
             'name' => 'Test'
         ]);
     }
+
+    public function test_can_user_registered()
+    {
+        $response = $this->post('/registered', [
+            'name' => 'Test2',
+            'email' => 'test11@mail.com',
+            'password' => '12345qwertyW',
+            'password_confirmation' => '12345qwertyW'
+        ]);
+
+        $response->assertRedirect('/email/verify');
+
+        $this->assertDatabaseCount('users', 1);
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'Test2',
+        ]);
+    }
 }

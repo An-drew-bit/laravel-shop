@@ -13,22 +13,45 @@
             @csrf
 
             <input type="text" name="name"
-                   class="w-full h-14 px-4 rounded-lg border border-[#A07BF0] bg-white/20 focus:border-pink focus:shadow-[0_0_0_2px_#EC4176] outline-none transition text-white placeholder:text-white text-xxs md:text-xs font-semibold"
-                   placeholder="Имя и фамилия" required>
+                   class="w-full h-14 px-4 rounded-lg border border-[#A07BF0] bg-white/20 focus:border-pink focus:shadow-[0_0_0_2px_#EC4176] outline-none transition text-white placeholder:text-white text-xxs md:text-xs font-semibold
+                        @error('name')
+                            _is-error focus:border-pink
+                        @enderror"
+                   placeholder="Имя и фамилия">
+            @error('name')
+                <div class="mt-3 text-pink text-xxs xs:text-xs">{{ $message }}</div>
+            @enderror
             <input type="email" name="email"
-                   class="w-full h-14 px-4 rounded-lg border border-[#A07BF0] bg-white/20 focus:border-pink focus:shadow-[0_0_0_2px_#EC4176] outline-none transition text-white placeholder:text-white text-xxs md:text-xs font-semibold"
-                   placeholder="E-mail" required>
+                   class="w-full h-14 px-4 rounded-lg border border-[#A07BF0] bg-white/20 focus:border-pink focus:shadow-[0_0_0_2px_#EC4176] outline-none transition text-white placeholder:text-white text-xxs md:text-xs font-semibold
+                        @error('email')
+                            _is-error focus:border-pink
+                        @enderror"
+                   placeholder="E-mail">
+            @error('email')
+                <div class="mt-3 text-pink text-xxs xs:text-xs">{{ $message }}</div>
+            @enderror
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                     <input type="password" name="password"
-                           class="w-full h-14 px-4 rounded-lg border border-[#A07BF0] bg-white/20 focus:border-pink focus:shadow-[0_0_0_2px_#EC4176] outline-none transition text-white placeholder:text-white text-xxs md:text-xs font-semibold"
-                           placeholder="Пароль" required>
+                           class="w-full h-14 px-4 rounded-lg border border-[#A07BF0] bg-white/20 focus:border-pink focus:shadow-[0_0_0_2px_#EC4176] outline-none transition text-white placeholder:text-white text-xxs md:text-xs font-semibold
+                               @error('password_confirmation')
+                                    _is-error focus:border-pink
+                               @enderror"
+                           placeholder="Пароль">
+                    @error('password')
+                        <div class="mt-3 text-pink text-xxs xs:text-xs">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div>
                     <input type="password" name="password_confirmation"
-                           class="_is-error w-full h-14 px-4 rounded-lg border border-[#A07BF0] bg-white/20 focus:border-pink focus:shadow-[0_0_0_2px_#EC4176] outline-none transition text-white placeholder:text-white text-xxs md:text-xs font-semibold"
-                           placeholder="Повторно пароль" required>
-                    <div class="mt-3 text-pink text-xxs xs:text-xs">Введите пароль ещё раз</div>
+                           class="w-full h-14 px-4 rounded-lg border border-[#A07BF0] bg-white/20 focus:border-pink focus:shadow-[0_0_0_2px_#EC4176] outline-none transition text-white placeholder:text-white text-xxs md:text-xs font-semibold
+                               @error('password_confirmation')
+                                    _is-error focus:border-pink
+                               @enderror"
+                           placeholder="Повторно пароль">
+                    @error('password_confirmation')
+                        <div class="mt-3 text-pink text-xxs xs:text-xs">{{ $message }}</div>
+                    @enderror
                 </div>
             </div>
             <button type="submit" class="w-full btn btn-pink">Зарегистрироваться</button>
