@@ -21,7 +21,7 @@ class ForgotPasswordController extends Controller
     public function update(ForgotPasswordRequest $request, UserBuilder $builder): RedirectResponse
     {
         $user = $builder->getUserByEmail($request->email);
-        $url = url()->to('/') . bcrypt('reestablish');
+        $url = url('/') . bcrypt('reestablish');
 
         dispatch(new ForgotPasswordJob($user, $url));
 

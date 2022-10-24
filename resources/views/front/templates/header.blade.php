@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
 	<meta charset="utf-8">
-	<title>Laravel-shop</title>
+	<title>@yield('title', env('APP_NAME'))</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
 	<link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png">
@@ -12,20 +12,17 @@
 	<meta name="msapplication-TileColor" content="#1E1F43">
 	<meta name="theme-color" content="#1E1F43">
 
-	{{--<link rel="stylesheet" href="./css/tailwind.css">--}}
     @vite(['resources/css/app.css', 'resources/sass/main.sass', 'resources/js/app.js'])
 </head>
 <body x-data="{ 'showTaskUploadModal': false, 'showTaskEditModal': false }" x-cloak>
-
-	<!-- Site header -->
 	<header class="header pt-6 xl:pt-12">
 		<div class="container">
 			<div class="header-inner flex items-center justify-between lg:justify-start">
 				<div class="header-logo shrink-0">
 					<a href="{{ route('home') }}" rel="home">
-						<img src="./images/logo.svg" class="w-[120px] xs:w-[148px] md:w-[201px] h-[30px] xs:h-[36px] md:h-[50px]" alt="Sublime.">
+						<img src="{{ Vite::image('logo.svg') }}" class="w-[120px] xs:w-[148px] md:w-[201px] h-[30px] xs:h-[36px] md:h-[50px]" alt="Sublime.">
 					</a>
-				</div><!-- /.header-logo -->
+				</div>
 				<div class="header-menu grow hidden lg:flex items-center ml-8 mr-8 gap-8">
 					<form class="hidden lg:flex gap-3">
 						<input type="search" class="w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition" placeholder="Поиск..." required>
@@ -70,8 +67,7 @@
                                 x-transition:leave="ease-in duration-150"
                                 x-transition:leave-start="opacity-100"
                                 x-transition:leave-end="opacity-0"
-                                class="absolute z-50 top-0 -right-20 xs:-right-8 sm:right-0 w-[280px] sm:w-[300px] mt-14 p-4 rounded-lg shadow-xl bg-card"
-                            >
+                                class="absolute z-50 top-0 -right-20 xs:-right-8 sm:right-0 w-[280px] sm:w-[300px] mt-14 p-4 rounded-lg shadow-xl bg-card">
                                 <h5 class="text-body text-xs">Мой профиль</h5>
                                 <div class="flex items-center mt-3">
                                     <img src="./images/avatar.jpg" class="w-11 h-11 rounded-full" alt="Данил Шуцкий">
@@ -114,3 +110,33 @@
 			</div><!-- /.header-inner -->
 		</div><!-- /.container -->
 	</header>
+
+    <div class="container">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul class="list-unstyled">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if (session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        @if (session()->has('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session()->has('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
+    </div>

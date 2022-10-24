@@ -21,9 +21,12 @@ class NewPasswordController extends Controller
     {
         $user = $builder->getUserByEmail($request->email);
 
-        $user->password = bcrypt($request->password);
+        $user->forceFill([
+            'password' => bcrypt($request->password)
+        ]);
+
         $user->save();
 
-        return to_route('home')->with('success', __('passwords.reset'));
+        return to_route('login')->with('success', __('passwords.reset'));
     }
 }

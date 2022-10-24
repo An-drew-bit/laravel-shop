@@ -10,13 +10,13 @@ class LoginRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return auth()->guest();
     }
 
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email', 'string'],
+            'email' => ['required', 'email:dns', 'string'],
             'password' => ['required'],
         ];
     }

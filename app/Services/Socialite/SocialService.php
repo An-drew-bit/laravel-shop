@@ -12,7 +12,7 @@ final class SocialService implements Social
 {
     public function loginSocial(SocialUser $socialUser): string
     {
-        $password = 'password';
+        $password = str()->random(10);
 
         try {
             $user = User::updateOrCreate([
@@ -26,7 +26,7 @@ final class SocialService implements Social
 
             auth()->login($user);
 
-            return url()->to('/');
+            return url('/');
 
         } catch (ModelNotFoundException $exception) {
             throw new ModelNotFoundException($exception->getMessage());
