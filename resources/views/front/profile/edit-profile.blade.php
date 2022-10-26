@@ -3,9 +3,7 @@
 @section('content')
     <main class="py-16 lg:py-20">
         <div class="container">
-
             <section>
-                <!-- Section heading -->
                 <h1 class="mb-8 text-lg lg:text-[42px] font-black text-center">Редактировать профиль</h1>
 
                 <div class="max-w-[640px] mt-12 mx-auto p-6 xs:p-8 md:p-12 2xl:p-16 rounded-[20px] bg-purple">
@@ -13,56 +11,61 @@
                         @csrf
                         @method('PUT')
 
-                        <input type="text" name="name"
-                               class="w-full h-14 px-4 rounded-lg border border-[#A07BF0] bg-white/20 focus:border-pink focus:shadow-[0_0_0_2px_#EC4176] outline-none transition text-white placeholder:text-white text-xxs md:text-xs font-semibold
-                               @error('name')
-                                    _is-error focus:border-pink
-                               @enderror"
-                               value="{{ $user->name }}"
-                               placeholder="Имя и фамилия">
+                        <x-forms.text-input
+                            type="text"
+                            name="name"
+                            placeholder="Имя и фамилия"
+                            :isError="$errors->has('name')"
+                            value="{{ $user->name }}">
+                        </x-forms.text-input>
+
                         @error('name')
-                            <div class="mt-3 text-pink text-xxs xs:text-xs">{{ $message }}</div>
+                            <x-forms.error>{{ $message }}</x-forms.error>
                         @enderror
-                        <input type="email" name="email"
-                               class="w-full h-14 px-4 rounded-lg border border-[#A07BF0] bg-white/20 focus:border-pink focus:shadow-[0_0_0_2px_#EC4176] outline-none transition text-white placeholder:text-white text-xxs md:text-xs font-semibold
-                               @error('email')
-                                    _is-error focus:border-pink
-                               @enderror"
-                               value="{{ $user->email }}"
-                               placeholder="E-mail">
+
+                        <x-forms.text-input
+                            type="email"
+                            name="email"
+                            placeholder="E-mail"
+                            :isError="$errors->has('email')"
+                            value="{{ $user->email }}">
+                        </x-forms.text-input>
+
                         @error('email')
-                            <div class="mt-3 text-pink text-xxs xs:text-xs">{{ $message }}</div>
+                            <x-forms.error>{{ $message }}</x-forms.error>
                         @enderror
+
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
-                                <input type="password" name="password"
-                                       class="w-full h-14 px-4 rounded-lg border border-[#A07BF0] bg-white/20 focus:border-pink focus:shadow-[0_0_0_2px_#EC4176] outline-none transition text-white placeholder:text-white text-xxs md:text-xs font-semibold
-                                        @error('password')
-                                            _is-error focus:border-pink
-                                        @enderror"
-                                       placeholder="Пароль">
+                                <x-forms.text-input
+                                    type="password"
+                                    name="password"
+                                    placeholder="Пароль"
+                                    :isError="$errors->has('password')">
+                                </x-forms.text-input>
+
                                 @error('password')
-                                    <div class="mt-3 text-pink text-xxs xs:text-xs">{{ $message }}</div>
+                                    <x-forms.error>{{ $message }}</x-forms.error>
                                 @enderror
                             </div>
                             <div>
-                                <input type="password" name="password_confirmation"
-                                       class="w-full h-14 px-4 rounded-lg border border-[#A07BF0] bg-white/20 focus:border-pink focus:shadow-[0_0_0_2px_#EC4176] outline-none transition text-white placeholder:text-white text-xxs md:text-xs font-semibold
-                                        @error('password_confirmation')
-                                            _is-error focus:border-pink
-                                        @enderror"
-                                       placeholder="Повторно пароль">
+                                <x-forms.text-input
+                                    type="password"
+                                    name="password_confirmation"
+                                    placeholder="Повторите пароль"
+                                    :isError="$errors->has('password_confirmation')">
+                                </x-forms.text-input>
+
                                 @error('password_confirmation')
-                                    <div class="mt-3 text-pink text-xxs xs:text-xs">{{ $message }}</div>
+                                    <x-forms.error>{{ $message }}</x-forms.error>
                                 @enderror
                             </div>
                         </div>
-                        <button type="submit" class="w-full btn btn-pink">Сохранить</button>
+
+                        <x-forms.primary-button>Сохранить</x-forms.primary-button>
                     </form>
                 </div>
-
             </section>
-
         </div>
     </main>
 @endsection
