@@ -24,6 +24,8 @@ class AuthSocialController extends Controller
 
     public function callback(Social $social, string $driver): RedirectResponse
     {
+        flash()->info(__('auth.success_login'));
+
         return redirect(
             $social->loginSocial(Socialite::driver($driver)->user())
         );

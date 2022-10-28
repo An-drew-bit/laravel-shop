@@ -112,21 +112,9 @@
 	</header>
 
     <div class="container">
-        @if (session()->has('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        @if (session()->has('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if (session()->has('message'))
-            <div class="alert alert-success">
-                {{ session('message') }}
+        @if ($message = flash()->get())
+            <div class="{{ $message->getClass() }}">
+                {{ $message->getMessage() }}
             </div>
         @endif
     </div>

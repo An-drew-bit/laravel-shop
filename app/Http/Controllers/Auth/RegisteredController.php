@@ -36,6 +36,8 @@ class RegisteredController extends Controller
             return to_route('verification.notice');
         }
 
-        return to_route('login')->with('success', __('auth.success_registered'));
+        flash()->info(__('auth.success_registered'));
+
+        return to_route('login');
     }
 }

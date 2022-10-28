@@ -34,12 +34,16 @@ Route::controller(VerificationController::class)->group(function () {
 Route::middleware('guest')->group(function () {
     Route::controller(RegisteredController::class)->group(function() {
         Route::get('/registered', 'show')->name('registered');
-        Route::post('/registered', 'store')->name('registered.store');
+        Route::post('/registered', 'store')
+            ->middleware('throttle:auth')
+            ->name('registered.store');
     });
 
     Route::controller(AuthenticatedController::class)->group(function() {
         Route::get('/login', 'show')->name('login');
-        Route::post('/login', 'store')->name('login.store');
+        Route::post('/login', 'store')
+            ->middleware('throttle:auth')
+            ->name('login.store');
     });
 
     Route::controller(AuthSocialController::class)->group(function() {

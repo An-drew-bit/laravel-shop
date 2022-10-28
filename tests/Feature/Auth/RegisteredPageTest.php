@@ -3,26 +3,26 @@
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class RegisteredPageTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_registered_page_status()
+    public function test_registered_page_status(): void
     {
         $response = $this->get('/registered');
 
         $response->assertStatus(200);
     }
 
-    public function test_add_user_in_database()
+    public function test_add_user_in_database(): void
     {
         User::factory()->create([
             'id' => 10,
@@ -38,21 +38,38 @@ class RegisteredPageTest extends TestCase
         ]);
     }
 
-    public function test_can_user_registered()
+    public function test_can_user_registered(): void
     {
-        $response = $this->post('/registered', [
+        Event::fake();
+        Notification::fake();
+
+        $request = [
             'name' => 'Test2',
             'email' => 'test11@mail.com',
             'password' => '12345qwertyW',
             'password_confirmation' => '12345qwertyW'
-        ]);
+        ];
+
+        $response = $this->post('/registered', $request);
 
         $response->assertRedirect('/email/verify');
 
         $this->assertDatabaseCount('users', 1);
 
         $this->assertDatabaseHas('users', [
-            'name' => 'Test2',
+            'email' => $request['email'],
         ]);
+
+        /* @var Authenticatable $user */
+        $user = User::query()->where('email', $request['email'])->first();
+
+        Event::assertDispatched(Registered::class);
+        Event::assertListening(Registered::class, SendEmailVerificationNotification::class);
+
+        $event = new Registered($user);
+        $listener = new SendEmailVerificationNotification();
+        $listener->handle($event);
+
+        $this->assertAuthenticatedAs($user);
     }
 }

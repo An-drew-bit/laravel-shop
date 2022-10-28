@@ -23,7 +23,9 @@ class AuthenticatedController extends Controller
 
         $request->session()->regenerate();
 
-        return to_route('home')->with('success', __('auth.success_login'));
+        flash()->info(__('auth.success_login'));
+
+        return to_route('home');
     }
 
     public function logout(Request $request): RedirectResponse

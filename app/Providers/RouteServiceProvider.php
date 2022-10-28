@@ -51,6 +51,9 @@ class RouteServiceProvider extends ServiceProvider
                 ->response(fn(Request $request, array $headers) =>
                 response('Take it easy', Response::HTTP_TOO_MANY_REQUESTS, $headers)));
 
+        RateLimiter::for('auth', fn(Request $request) => Limit::perMinute(20)
+            ->by($request->ip()));
+
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
