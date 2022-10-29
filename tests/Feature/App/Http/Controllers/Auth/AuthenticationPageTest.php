@@ -1,7 +1,8 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature\App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Auth\AuthenticatedController;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -9,19 +10,15 @@ use Tests\TestCase;
 class AuthenticationPageTest extends TestCase
 {
     use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_auth_page_status()
+
+    public function test_auth_page_status(): void
     {
         $response = $this->get('/login');
 
         $response->assertStatus(200);
     }
 
-    public function test_can_user_auth()
+    public function test_can_user_auth(): void
     {
         User::factory()->create([
             'id' => 1,
@@ -42,5 +39,20 @@ class AuthenticationPageTest extends TestCase
         ]);
 
         $response->assertRedirect('/');
+    }
+
+    public function test_can_user_logout(): void
+    {
+        $user = User::factory()->create([
+            'id' => 2,
+            'name' => 'Test2',
+            'email' => 'test12@mail.com',
+            'password' => 12345
+        ]);
+
+        $this->actingAs($user)
+            ->get(action([AuthenticatedController::class, 'logout']));
+
+        $this->assertGuest();
     }
 }

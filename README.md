@@ -2,7 +2,7 @@
 
 ### Чистый запуск
 ```
-{%project_folder%}: cp ./env.example ./.env
+{%project_folder%}: cp ./env.example ./.env and ./env.testing.example ./.env.testing
 {%project_folder%}: composer install
 {%project_folder%}: npm install
 {%project_folder%}: php artisan shop:install

@@ -1,7 +1,8 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature\App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Auth\RegisteredController;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -17,9 +18,8 @@ class RegisteredPageTest extends TestCase
 
     public function test_registered_page_status(): void
     {
-        $response = $this->get('/registered');
-
-        $response->assertStatus(200);
+        $this->get(action([RegisteredController::class, 'show']))
+            ->assertOk();
     }
 
     public function test_add_user_in_database(): void
@@ -50,9 +50,12 @@ class RegisteredPageTest extends TestCase
             'password_confirmation' => '12345qwertyW'
         ];
 
-        $response = $this->post('/registered', $request);
+        $response = $this->post(
+            action([RegisteredController::class, 'store']),
+            $request);
 
-        $response->assertRedirect('/email/verify');
+        $response->assertValid()
+            ->assertRedirect('/email/verify');
 
         $this->assertDatabaseCount('users', 1);
 
