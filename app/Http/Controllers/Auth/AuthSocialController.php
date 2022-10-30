@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Services\Socialite\Contract\Social;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Laravel\Socialite\Facades\Socialite;
+use Services\Socialite\Contract\Social;
 
 class AuthSocialController extends Controller
 {
@@ -19,7 +19,13 @@ class AuthSocialController extends Controller
 
     public function redirect(string $driver): RedirectResponse
     {
-        return Socialite::driver($driver)->redirect();
+        try {
+            return Socialite::driver($driver)->redirect();
+
+        } catch (\Throwable $exception) {
+            throw new \DomainException('Произошла ошибка или драйвер не поддерживается');
+        }
+
     }
 
     public function callback(Social $social, string $driver): RedirectResponse

@@ -3,7 +3,8 @@
 namespace Tests\Feature\App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Auth\RegisteredController;
-use App\Models\User;
+use Database\Factories\Domain\User\Models\UserFactory;
+use Domain\User\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Contracts\Auth\Authenticatable;
@@ -24,7 +25,7 @@ class RegisteredPageTest extends TestCase
 
     public function test_add_user_in_database(): void
     {
-        User::factory()->create([
+        UserFactory::new()->create([
             'id' => 10,
             'name' => 'Test',
             'email' => 'test@mail.com',

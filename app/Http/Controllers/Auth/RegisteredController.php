@@ -4,13 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisteredRequest;
-use App\Models\User;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
+use Domain\User\Actions\Contract\RegisteredContract;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Str;
+use Illuminate\Http\RedirectResponse;
 
 class RegisteredController extends Controller
 {
@@ -19,25 +17,22 @@ class RegisteredController extends Controller
         return view('front.auth.registered');
     }
 
-    public function store(RegisteredRequest $request): RedirectResponse
+    public function store(RegisteredRequest $request, RegisteredContract $action): RedirectResponse
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'remember_token' => Str::random(40)
-        ]);
+        // TODO перевести на DTO
+        try {
+            $action->handle(
+                $request->get('name'),
+                $request->get('email'),
+                $request->get('password')
+            );
 
-        if ($user) {
-            event(new Registered($user));
-
-            auth('web')->login($user);
+            flash()->info(__('auth.success_registered'));
 
             return to_route('verification.notice');
+
+        } catch (\Throwable $exception) {
+            return to_route('login');
         }
-
-        flash()->info(__('auth.success_registered'));
-
-        return to_route('login');
     }
 }

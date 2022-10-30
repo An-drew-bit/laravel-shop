@@ -2,7 +2,8 @@
 
 namespace Tests\Feature\App\Http\Controllers\Profile;
 
-use App\Models\User;
+use Database\Factories\Domain\User\Models\UserFactory;
+use Domain\User\Models\User;
 use Tests\TestCase;
 
 class ProfilePageTest extends TestCase
@@ -14,7 +15,7 @@ class ProfilePageTest extends TestCase
      */
     public function test_profile_page_status()
     {
-        $user = User::factory()->create([
+        $user = UserFactory::new()->create([
             'id' => 1,
             'name' => 'Test 2',
             'email' => 'test2@mail.com',

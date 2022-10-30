@@ -2,12 +2,16 @@
 
 namespace App\Providers;
 
+use App\Contracts\RouteRegistrar;
+use App\Routing\AppRegistrar;
+use Domain\User\Routing\AuthRegistrar;
+use Illuminate\Contracts\Routing\Registrar;
+use RuntimeException;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -20,30 +24,18 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/';
 
-    /**
-     * Define your route model bindings, pattern filters, and other route configuration.
-     *
-     * @return void
-     */
+    protected array $registrars = [
+        AppRegistrar::class,
+        AuthRegistrar::class,
+    ];
+
     public function boot(): void
     {
         $this->configureRateLimiting();
 
-        $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
-
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
-        });
+        $this->routes(fn(Registrar $router) => $this->mapRoutes($router, $this->registrars));
     }
 
-    /**
-     * Configure the rate limiters for the application.
-     *
-     * @return void
-     */
     protected function configureRateLimiting(): void
     {
         RateLimiter::for('global', fn(Request $request) => Limit::perMinute(500)
@@ -57,5 +49,19 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
+    }
+
+    protected function mapRoutes(Registrar $router, array $registrars)
+    {
+        foreach ($registrars as $registrar) {
+            if (!class_exists($registrar) || !is_subclass_of($registrar, RouteRegistrar::class)) {
+                throw new RuntimeException(sprintf(
+                    'Cannot map routes \'%s\', it is not valid route class',
+                    $registrar
+                ));
+            }
+
+            (new $registrar)->map($router);
+        }
     }
 }
