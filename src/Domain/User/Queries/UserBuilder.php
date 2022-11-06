@@ -2,12 +2,12 @@
 
 namespace Domain\User\Queries;
 
+use App\Contracts\QueryBuilder;
 use Domain\User\Models\User;
-use Domain\User\Queries\Contract\QueryBuilder;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
-class UserBuilder implements QueryBuilder
+final class UserBuilder implements QueryBuilder
 {
     public function getBuilder(): Builder
     {

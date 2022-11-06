@@ -30,11 +30,13 @@ class AuthenticatedController extends Controller
 
     public function logout(Request $request): RedirectResponse
     {
-        auth('web')->logout();
+        auth()->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+
+        flash()->info(__('auth.success_logout'));
 
         return to_route('home');
     }

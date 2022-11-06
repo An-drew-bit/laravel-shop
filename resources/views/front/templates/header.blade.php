@@ -112,9 +112,11 @@
 	</header>
 
     <div class="container">
-        @if ($message = flash()->get())
-            <div class="{{ $message->getClass() }}">
-                {{ $message->getMessage() }}
-            </div>
-        @endif
+        <div class="mt-10">
+            @if ($message = flash()->get())
+                <div class="{{ $message->getClass() }}">
+                    {{ $message->getMessage() }}
+                </div>
+            @endif
+        </div>
     </div>
