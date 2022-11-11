@@ -3,7 +3,7 @@
 			<div class="flex flex-wrap lg:flex-nowrap items-center">
 				<div class="footer-logo order-0 basis-full sm:basis-1/2 lg:basis-1/3 shrink-0 text-center sm:text-left">
 					<a href="{{ route('home') }}" class="inline-block" rel="home">
-						<img src="{{ Vite::image('logo.svg') }}" class="w-[155px] h-[38px]" alt="Sublime.">
+						<img src="{{ Vite::image('logo-dark.svg') }}" class="w-[155px] h-[38px]" alt="Sublime.">
 					</a>
 				</div>
 				<div class="footer-copyright order-2 lg:order-1 basis-full lg:basis-1/3 mt-8 lg:mt-0">
@@ -25,9 +25,7 @@
 		</div>
 	</footer>
 
-	{{--@@include('../parts/mobile-menu.html')
-
-	@@include('../parts/modals.html')--}}
+	{{--@include('front/templates/mobile-menu')--}}
 
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     @vite('resources/js/app.js')

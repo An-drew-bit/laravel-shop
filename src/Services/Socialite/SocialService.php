@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Socialite\Contracts\User as SocialUser;
 use Services\Socialite\Contract\Social;
 
-final class SocialService implements Social
+class SocialService implements Social
 {
     public function loginSocial(SocialUser $socialUser): string
     {

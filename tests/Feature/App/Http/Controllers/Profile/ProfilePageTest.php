@@ -8,12 +8,7 @@ use Tests\TestCase;
 
 class ProfilePageTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_profile_page_status()
+    public function test_profile_page_status(): void
     {
         $user = UserFactory::new()->create([
             'id' => 1,

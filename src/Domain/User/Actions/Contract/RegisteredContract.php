@@ -2,9 +2,9 @@
 
 namespace Domain\User\Actions\Contract;
 
-use Illuminate\Http\RedirectResponse;
+use Domain\User\DTO\NewUserDTO;
 
 interface RegisteredContract
 {
-    public function handle(string $name, string $email, string $password): void;
+    public function __invoke(NewUserDTO $data): void;
 }

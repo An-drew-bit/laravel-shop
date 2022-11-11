@@ -11,48 +11,51 @@ class AuthenticationPageTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_auth_page_status(): void
+    public function test_it_page_success(): void
     {
-        $response = $this->get(action([AuthenticatedController::class, 'show']));
-
-        $response->assertStatus(200);
+        $this->get(action([AuthenticatedController::class, 'show']))
+            ->assertOk()
+            ->assertSee('Вход в аккаунт')
+            ->assertViewIs('front.auth.login-mail');
     }
 
-    public function test_can_user_auth(): void
+    public function test_it_store_success(): void
     {
-        UserFactory::new()->create([
-            'id' => 1,
-            'name' => 'Test1',
+        $password = '12334567';
+
+        $user = UserFactory::new()->create([
             'email' => 'test1@mail.com',
-            'password' => 12345
+            'password' => bcrypt($password)
         ]);
 
-        $this->assertDatabaseCount('users', 1);
+        $request = [
+            'email' => $user->email,
+            'password' => $password
+        ];
 
-        $this->assertDatabaseHas('users', [
-            'name' => 'Test1',
-        ]);
+        $response = $this->post(action([AuthenticatedController::class, 'store']), $request);
 
-        $response = $this->post('/login', [
-            'email' => 'test1@mail.com',
-            'password' => 12345
-        ]);
+        $response->assertValid()
+            ->assertRedirect(route('home'));
 
-        $response->assertRedirect('/');
+        $this->assertAuthenticatedAs($user);
     }
 
-    public function test_can_user_logout(): void
+    public function test_it_logout_success()
     {
         $user = UserFactory::new()->create([
-            'id' => 2,
-            'name' => 'Test2',
             'email' => 'test12@mail.com',
-            'password' => 12345
         ]);
 
         $this->actingAs($user)
             ->get(action([AuthenticatedController::class, 'logout']));
 
         $this->assertGuest();
+    }
+
+    public function test_it_logout_guest_middleware_fail(): void
+    {
+        $this->get(action([AuthenticatedController::class, 'logout']))
+            ->assertRedirect(route('login'));
     }
 }

@@ -3,10 +3,14 @@
 namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Domain\Catalog\Models\Brand;
+use Domain\Catalog\Models\Category;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Support\Casts\PriceCast;
 
 class Product extends Model
 {
@@ -17,6 +21,12 @@ class Product extends Model
         'thumbnail',
         'price',
         'brand_id',
+        'on_home_page',
+        'sorting'
+    ];
+
+    protected $casts = [
+        'price' => PriceCast::class
     ];
 
     public function brand(): BelongsTo
@@ -36,5 +46,12 @@ class Product extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    public function scopeHomePage(Builder $query)
+    {
+        $query->where('on_home_page', true)
+            ->orderBy('sorting')
+            ->limit(6);
     }
 }

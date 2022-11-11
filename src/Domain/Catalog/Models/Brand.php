@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace Domain\Catalog\Models;
 
+use App\Models\Product;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Domain\Catalog\Builders\BrandBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,7 +15,9 @@ class Brand extends Model
 
     protected $fillable = [
         'title',
-        'thumbnail'
+        'thumbnail',
+        'on_home_page',
+        'sorting'
     ];
 
     public function products(): HasMany
@@ -28,5 +32,10 @@ class Brand extends Model
                 'source' => 'title'
             ]
         ];
+    }
+
+    public function newEloquentBuilder($query): BrandBuilder
+    {
+        return new BrandBuilder($query);
     }
 }
