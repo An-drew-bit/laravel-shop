@@ -1,4 +1,4 @@
-@extends('front.layouts.auth.layout')
+@extends('layouts.auth.layout')
 
 @section('content')
     <div class="max-w-[640px] mt-12 mx-auto p-6 xs:p-8 md:p-12 2xl:p-16 rounded-[20px] bg-purple">

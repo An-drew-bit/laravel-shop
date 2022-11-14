@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Contracts\RouteRegistrar;
 use App\Routing\AppRegistrar;
 use Domain\User\Routing\AuthRegistrar;
+use Domain\User\Routing\ProfileRegistrar;
+use Domain\User\Routing\VerifyEmailRegistrar;
 use Illuminate\Contracts\Routing\Registrar;
 use RuntimeException;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -27,6 +29,8 @@ class RouteServiceProvider extends ServiceProvider
     protected array $registrars = [
         AppRegistrar::class,
         AuthRegistrar::class,
+        ProfileRegistrar::class,
+        VerifyEmailRegistrar::class,
     ];
 
     public function boot(): void

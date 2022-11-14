@@ -21,13 +21,15 @@ class VerificationController extends Controller
     {
         $request->fulfill();
 
-        return redirect(route('home'));
+        return to_route('home');
     }
 
     public function repeatSendToMail(Request $request): RedirectResponse
     {
         $request->user()->sendEmailVerificationNotification();
 
-        return back()->with('message', __('email-verification.repeat'));
+        flash()->info(__('email-verification.repeat'));
+
+        return back();
     }
 }

@@ -29,29 +29,29 @@ final class Price implements Stringable
         }
     }
 
-    public function getValue(): int
+    public function value(): int
     {
         return $this->value / $this->precision;
     }
 
-    public function getRaw(): int|float
+    public function raw(): int|float
     {
         return $this->value;
     }
 
-    public function getCurrency(): string
+    public function currency(): string
     {
         return $this->currency;
     }
 
-    public function getSymbol(): string
+    public function symbol(): string
     {
         return $this->currencies[$this->currency];
     }
 
     public function __toString(): string
     {
-        return number_format($this->getValue(), 2, ',', ' ')
-            . ' ' . $this->getSymbol();
+        return number_format($this->value(), 2, ',', ' ')
+            . ' ' . $this->symbol();
     }
 }

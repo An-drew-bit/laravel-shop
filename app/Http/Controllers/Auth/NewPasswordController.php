@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ReestablishRequest;
-use Domain\User\Queries\UserBuilder;
+use Domain\User\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -17,9 +17,9 @@ class NewPasswordController extends Controller
         return view('front.auth.reestablish');
     }
 
-    public function reestablish(ReestablishRequest $request, UserBuilder $builder): RedirectResponse
+    public function reestablish(ReestablishRequest $request): RedirectResponse
     {
-        $user = $builder->getUserByEmail($request->email);
+        $user = User::getByEmail($request->email);
 
         $user->forceFill([
             'password' => bcrypt($request->password)
@@ -27,6 +27,8 @@ class NewPasswordController extends Controller
 
         $user->save();
 
-        return to_route('login')->with('success', __('passwords.reset'));
+        flash()->info(__('passwords.reset'));
+
+        return to_route('login');
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Profile;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 class EditProfileRequest extends FormRequest
@@ -16,7 +17,12 @@ class EditProfileRequest extends FormRequest
     {
         return [
             'name' => ['nullable', 'string'],
-            'email' => ['nullable', 'email', 'string', 'unique:users'],
+            'email' => [
+                'nullable',
+                'email',
+                'string',
+                Rule::unique('users')->ignore(auth()->user()->id)
+            ],
             'password' => ['nullable', 'confirmed', Password::default()],
         ];
     }

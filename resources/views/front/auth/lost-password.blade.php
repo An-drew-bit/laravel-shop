@@ -1,4 +1,4 @@
-@extends('front.layouts.auth.layout')
+@extends('layouts.auth.layout')
 
 @section('title', 'Восстановление пароля')
 

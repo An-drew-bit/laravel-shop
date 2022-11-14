@@ -1,4 +1,4 @@
-@extends('front.layouts.errors.layout')
+@extends('layouts.errors.layout')
 
 @section('content')
     <h1 class="text-2xl font-black text-center">{{ __('errors.404.error_404') }}</h1>

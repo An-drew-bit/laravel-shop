@@ -1,4 +1,4 @@
-@extends('front.layouts.home.layout')
+@extends('layouts.home.layout')
 
 @section('content')
     <main class="py-16 lg:py-20">

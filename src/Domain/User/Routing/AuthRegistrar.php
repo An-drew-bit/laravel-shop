@@ -8,8 +8,6 @@ use App\Http\Controllers\Auth\AuthSocialController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\RegisteredController;
-use App\Http\Controllers\Auth\VerificationController;
-use App\Http\Controllers\Profile\ProfileController;
 use Illuminate\Contracts\Routing\Registrar;
 use Illuminate\Support\Facades\Route;
 
@@ -52,24 +50,7 @@ class AuthRegistrar implements RouteRegistrar
             });
 
             Route::middleware('auth')->group(function () {
-                Route::get('/profile/{user}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-                Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-
                 Route::get('/logout', [AuthenticatedController::class, 'logout'])->name('logout');
-            });
-
-            Route::controller(VerificationController::class)->group(function () {
-                Route::get('/email/verify', 'getVerifyForm')
-                    ->middleware('auth')
-                    ->name('verification.notice');
-
-                Route::get('/email/verify/{id}/{hash}', 'verifycationRequest')
-                    ->middleware(['auth', 'signed'])
-                    ->name('verification.verify');
-
-                Route::post('/email/verification-notification', 'repeatSendToMail')
-                    ->middleware(['auth', 'throttle:6,1'])
-                    ->name('verification.send');
             });
         });
     }

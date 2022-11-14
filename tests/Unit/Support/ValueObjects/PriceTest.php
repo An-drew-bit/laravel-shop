@@ -13,9 +13,9 @@ class PriceTest extends TestCase
 
         $this->assertInstanceOf(Price::class, $price);
 
-        $this->assertEquals(100, $price->getValue());
-        $this->assertEquals(10000, $price->getRaw());
-        $this->assertEquals('RUB', $price->getCurrency());
+        $this->assertEquals(100, $price->value());
+        $this->assertEquals(10000, $price->raw());
+        $this->assertEquals('RUB', $price->currency());
     }
 
     public function test_it_invalid_currency(): void

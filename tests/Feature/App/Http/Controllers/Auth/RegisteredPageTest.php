@@ -115,10 +115,10 @@ class RegisteredPageTest extends TestCase
         Notification::assertSentTo($this->findUser(), NewUserNotification::class);
     }
 
-    public function it_user_authenticated_after_registered(): void
+    public function test_it_user_authenticated_after_registered(): void
     {
         $this->request()
-            ->assertRedirect(route('home'));
+            ->assertRedirect(route('verification.notice'));
 
         $this->assertAuthenticatedAs($this->findUser());
     }

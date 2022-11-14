@@ -2,7 +2,7 @@
 
 namespace Domain\User\Models;
 
-use App\Models\Role;
+use Domain\User\Builders\UserBuilder;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +11,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * @method static User|UserBuilder query()
+ */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -57,5 +60,10 @@ class User extends Authenticatable implements MustVerifyEmail
         return Attribute::make(
             get: fn() => 'https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=' . $this->name
         );
+    }
+
+    public function newEloquentBuilder($query): UserBuilder
+    {
+        return new UserBuilder($query);
     }
 }
