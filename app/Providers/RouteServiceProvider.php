@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Contracts\RouteRegistrar;
 use App\Routing\AppRegistrar;
+use Domain\Catalog\Routing\CatalogRegistrar;
 use Domain\User\Routing\AuthRegistrar;
 use Domain\User\Routing\ProfileRegistrar;
 use Domain\User\Routing\VerifyEmailRegistrar;
@@ -31,6 +32,7 @@ class RouteServiceProvider extends ServiceProvider
         AuthRegistrar::class,
         ProfileRegistrar::class,
         VerifyEmailRegistrar::class,
+        CatalogRegistrar::class,
     ];
 
     public function boot(): void

@@ -6,9 +6,12 @@
 
             <!-- Breadcrumbs -->
             <ul class="breadcrumbs flex flex-wrap gap-y-1 gap-x-4 mb-6">
-                <li><a href="index.html" class="text-body hover:text-pink text-xs">Главная</a></li>
-                <li><a href="catalog.html" class="text-body hover:text-pink text-xs">Каталог</a></li>
-                <li><span class="text-body text-xs">Мыши</span></li>
+                <li><a href="{{ route('home') }}" class="text-body hover:text-pink text-xs">Главная</a></li>
+                <li><a href="{{ route('catalog') }}" class="text-body hover:text-pink text-xs">Каталог</a></li>
+
+                @if($category->exists)
+                    <li><span class="text-body text-xs">{{ $category->title }}</span></li>
+                @endif
             </ul>
 
             <section>
@@ -17,26 +20,7 @@
 
                 <!-- Categories -->
                 <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4 md:gap-5 mt-8">
-                    <a href="catalog.html"
-                       class="pointer-events-none p-3 sm:p-4 2xl:p-6 rounded-xl bg-purple text-xxs sm:text-xs lg:text-sm text-white font-semibold">Мыши</a>
-                    <a href="catalog.html"
-                       class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Клавиатуры</a>
-                    <a href="catalog.html"
-                       class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Наушники</a>
-                    <a href="catalog.html"
-                       class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Поверхности</a>
-                    <a href="catalog.html"
-                       class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Мониторы</a>
-                    <a href="catalog.html"
-                       class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Геймпады</a>
-                    <a href="catalog.html"
-                       class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Консоли</a>
-                    <a href="catalog.html"
-                       class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Акустика</a>
-                    <a href="catalog.html"
-                       class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Аксесуары</a>
-                    <a href="catalog.html"
-                       class="p-3 sm:p-4 2xl:p-6 rounded-xl bg-card hover:bg-pink text-xxs sm:text-xs lg:text-sm text-white font-semibold">Распродажа</a>
+                    @each('front.catalog.shared.category', $categories, 'category')
                 </div>
             </section>
 
@@ -48,7 +32,7 @@
 
                     <!-- Filters -->
                     <aside class="basis-2/5 xl:basis-1/4">
-                        <form
+                        <form action="{{ route('catalog', $category) }}"
                             class="overflow-auto max-h-[320px] lg:max-h-[100%] space-y-10 p-6 2xl:p-8 rounded-2xl bg-card">
                             <!-- Filter item -->
                             <div>
@@ -58,42 +42,37 @@
                                     <span class="text-body text-xxs font-medium">До, ₽</span>
                                 </div>
                                 <div class="flex items-center gap-3">
-                                    <input type="number"
-                                           class="w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition"
-                                           value="9800" placeholder="От">
+                                    <input name="filters[price][from]"
+                                        type="number"
+                                        value="{{ request('filters.price.from', 0) }}"
+                                        class="w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition"
+                                        placeholder="От">
+
                                     <span class="text-body text-sm font-medium">–</span>
-                                    <input type="number"
-                                           class="w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition"
-                                           value="142800" placeholder="До">
+
+                                    <input name="filters[price][to]"
+                                        value="{{ request('filters.price.to', 100000) }}"
+                                        type="number"
+                                        class="w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition"
+                                        placeholder="До">
                                 </div>
                             </div>
                             <!-- Filter item -->
                             <div>
                                 <h5 class="mb-4 text-sm 2xl:text-md font-bold">Бренд</h5>
-                                <div class="form-checkbox">
-                                    <input type="checkbox" id="filters-item-1">
-                                    <label for="filters-item-1" class="form-checkbox-label">Steelseries</label>
-                                </div>
-                                <div class="form-checkbox">
-                                    <input type="checkbox" id="filters-item-2">
-                                    <label for="filters-item-2" class="form-checkbox-label">Razer</label>
-                                </div>
-                                <div class="form-checkbox">
-                                    <input type="checkbox" id="filters-item-3">
-                                    <label for="filters-item-3" class="form-checkbox-label">Logitech</label>
-                                </div>
-                                <div class="form-checkbox">
-                                    <input type="checkbox" id="filters-item-4">
-                                    <label for="filters-item-4" class="form-checkbox-label">HyperX</label>
-                                </div>
-                                <div class="form-checkbox">
-                                    <input type="checkbox" id="filters-item-5">
-                                    <label for="filters-item-5" class="form-checkbox-label">Playstation</label>
-                                </div>
-                                <div class="form-checkbox">
-                                    <input type="checkbox" id="filters-item-6">
-                                    <label for="filters-item-6" class="form-checkbox-label">XBOX</label>
-                                </div>
+
+                                @foreach($brands as $brand)
+                                    <div class="form-checkbox">
+                                        <input name="filters[brands][{{ $brand->id }}]"
+                                               value="{{ $brand->id }}"
+                                               type="checkbox"
+                                               @checked(request('filters.brands.' . $brand->id))
+                                               id="filters-item-{{ $brand->id }}">
+                                        <label for="filters-item-{{ $brand->id }}" class="form-checkbox-label">
+                                            {{ $brand->title }}
+                                        </label>
+                                    </div>
+                                @endforeach
                             </div>
                             <!-- Filter item -->
                             <div>
@@ -135,9 +114,17 @@
                                     <label for="filters-item-8" class="form-checkbox-label">З подсветкой</label>
                                 </div>
                             </div>
+
                             <div>
-                                <button type="reset" class="w-full !h-16 btn btn-outline">Сбросить фильтры</button>
+                                <button type="submit" class="w-full !h-16 btn btn-outline">Поиск</button>
                             </div>
+
+                            @if(request('filters'))
+                                <div>
+                                    <a href="{{ route('catalog', $category) }}"
+                                       class="w-full !h-16 btn btn-outline">Сбросить фильтры</a>
+                                </div>
+                            @endif
                         </form>
                     </aside>
 
@@ -165,39 +152,32 @@
                                         </svg>
                                     </a>
                                 </div>
-                                <div class="text-body text-xxs sm:text-xs">Найдено: 25 товаров</div>
+                                <div class="text-body text-xxs sm:text-xs">Найдено: {{ $products->total() }} товаров</div>
                             </div>
-                            <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                            <div x-data="{}" class="flex flex-col sm:flex-row sm:items-center gap-3">
                                 <span class="text-body text-xxs sm:text-xs">Сортировать по</span>
-                                <form>
+                                <form x-ref="sortForm" action="{{ route('catalog', $category) }}">
                                     <select
+                                        name="sort"
+                                        x-on:change="$refs.sortForm.submit()"
                                         class="form-select w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xxs sm:text-xs shadow-transparent outline-0 transition">
-                                        <option value="умолчанию" class="text-dark">умолчанию</option>
-                                        <option value="умолчанию" class="text-dark">от дешевых к дорогим</option>
-                                        <option value="умолчанию" class="text-dark">от дорогих к дешевым</option>
-                                        <option value="умолчанию" class="text-dark">наименованию</option>
+                                        <option value="" class="text-dark">умолчанию</option>
+                                        <option @selected(request('sort') === 'price' ) value="price" class="text-dark">от дешевых к дорогим</option>
+                                        <option @selected(request('sort') === '-price' ) value="-price" class="text-dark">от дорогих к дешевым</option>
+                                        <option @selected(request('sort') === 'title' ) value="title" class="text-dark">наименованию</option>
                                     </select>
                                 </form>
                             </div>
                         </div>
 
                         <!-- Products list -->
-                        <div
-                            class="products grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-6 2xl:gap-x-8 gap-y-8 lg:gap-y-10 2xl:gap-y-12">
-                            {{--@@include('parts/products/1.html')
-                            @@include('parts/products/2.html')
-                            @@include('parts/products/3.html')
-                            @@include('parts/products/4.html')
-                            @@include('parts/products/5.html')
-                            @@include('parts/products/6.html')
-                            @@include('parts/products/7.html')
-                            @@include('parts/products/8.html')
-                            @@include('parts/products/9.html')--}}
+                        <div class="products grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-6 2xl:gap-x-8 gap-y-8 lg:gap-y-10 2xl:gap-y-12">
+                            @each('front.catalog.shared.products', $products, 'product')
                         </div>
 
                         <!-- Page pagination -->
                         <div class="mt-12">
-                            {{--@@include('parts/pagination.html')--}}
+                            {{ $products->withQueryString()->links() }}
                         </div>
                     </div>
                 </div>
