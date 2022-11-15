@@ -20,7 +20,7 @@ class RegisteredPageTest extends TestCase
 
     protected array $request;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
 
