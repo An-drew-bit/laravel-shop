@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Catalog;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use Domain\Catalog\Models\Brand;
 use Domain\Catalog\Models\Category;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
@@ -15,11 +14,6 @@ class CatalogController extends Controller
 {
     public function __invoke(?Category $category): Application|Factory|View
     {
-        $brands = Brand::query()
-            ->select(['id', 'title'])
-            ->has('products')
-            ->get();
-
         $categories = Category::query()
             ->select(['id', 'title', 'slug'])
             ->has('products')
@@ -39,7 +33,6 @@ class CatalogController extends Controller
         return view('front.catalog.index', [
             'products' => $products,
             'categories' => $categories,
-            'brands' => $brands,
             'category' => $category
         ]);
     }

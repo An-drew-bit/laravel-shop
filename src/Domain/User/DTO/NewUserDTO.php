@@ -17,7 +17,7 @@ final class NewUserDTO
     {
     }
 
-    public static function formRequest(Request $request): NewUserDTO
+    public static function formRequest(Request $request): self
     {
         return self::make(...$request->only(['name', 'email', 'password']));
     }

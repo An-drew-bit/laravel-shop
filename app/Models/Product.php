@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Pipeline\Pipeline;
 use Support\Casts\PriceCast;
 
 class Product extends Model
@@ -49,26 +50,22 @@ class Product extends Model
         ];
     }
 
-    public function scopeHomePage(Builder $query)
+    public function scopeHomePage(Builder $query): void
     {
         $query->where('on_home_page', true)
             ->orderBy('sorting')
             ->limit(8);
     }
 
-    public function scopeFiltered(Builder $query)
+    public function scopeFiltered(Builder $query): mixed
     {
-        $query->when(request('filters.brands'), function (Builder $builder) {
-            $builder->whereIn('brand_id', request('filters.brands'));
-        })->when(request('filters.price'), function (Builder $builder) {
-            $builder->whereBetween('price', [
-                request('filters.price.form', 0) * 100,
-                request('filters.price.to', 100000) * 100
-            ]);
-        });
+        return app(Pipeline::class)
+            ->send($query)
+            ->through(filters())
+            ->thenReturn();
     }
 
-    public function scopeSorted(Builder $query)
+    public function scopeSorted(Builder $query): void
     {
         $query->when(request('sort'), function (Builder $builder) {
             $column = request()->str('sort');

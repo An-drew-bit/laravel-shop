@@ -1,5 +1,6 @@
-@@include('parts/header.html')
+@extends('layouts.home.layout')
 
+@section('content')
 	<main class="py-16 lg:py-20">
 		<div class="container">
 
@@ -175,5 +176,4 @@
 
 		</div>
 	</main>
-
-@@include('parts/footer.html')
+@endsection

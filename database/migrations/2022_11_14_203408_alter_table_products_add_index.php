@@ -12,6 +12,8 @@ return new class extends Migration
             $table->text('text')
                 ->nullable();
 
+            $table->index(['title', 'price']);
+
             $table->fullText(['title', 'text']);
         });
     }
@@ -19,7 +21,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->dropIndex(['title', 'text']);
+            $table->dropIndex(['title', 'text', 'price']);
             $table->dropColumn('text');
         });
     }

@@ -34,46 +34,12 @@
                     <aside class="basis-2/5 xl:basis-1/4">
                         <form action="{{ route('catalog', $category) }}"
                             class="overflow-auto max-h-[320px] lg:max-h-[100%] space-y-10 p-6 2xl:p-8 rounded-2xl bg-card">
-                            <!-- Filter item -->
-                            <div>
-                                <h5 class="mb-4 text-sm 2xl:text-md font-bold">Цена</h5>
-                                <div class="flex items-center justify-between gap-3 mb-2">
-                                    <span class="text-body text-xxs font-medium">От, ₽</span>
-                                    <span class="text-body text-xxs font-medium">До, ₽</span>
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <input name="filters[price][from]"
-                                        type="number"
-                                        value="{{ request('filters.price.from', 0) }}"
-                                        class="w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition"
-                                        placeholder="От">
+                            <input type="hidden" name="sort" value="{{ request('sort') }}">
 
-                                    <span class="text-body text-sm font-medium">–</span>
+                            @foreach(filters() as $filter)
+                                {!! $filter !!}
+                            @endforeach
 
-                                    <input name="filters[price][to]"
-                                        value="{{ request('filters.price.to', 100000) }}"
-                                        type="number"
-                                        class="w-full h-12 px-4 rounded-lg border border-body/10 focus:border-pink focus:shadow-[0_0_0_3px_#EC4176] bg-white/5 text-white text-xs shadow-transparent outline-0 transition"
-                                        placeholder="До">
-                                </div>
-                            </div>
-                            <!-- Filter item -->
-                            <div>
-                                <h5 class="mb-4 text-sm 2xl:text-md font-bold">Бренд</h5>
-
-                                @foreach($brands as $brand)
-                                    <div class="form-checkbox">
-                                        <input name="filters[brands][{{ $brand->id }}]"
-                                               value="{{ $brand->id }}"
-                                               type="checkbox"
-                                               @checked(request('filters.brands.' . $brand->id))
-                                               id="filters-item-{{ $brand->id }}">
-                                        <label for="filters-item-{{ $brand->id }}" class="form-checkbox-label">
-                                            {{ $brand->title }}
-                                        </label>
-                                    </div>
-                                @endforeach
-                            </div>
                             <!-- Filter item -->
                             <div>
                                 <h5 class="mb-4 text-sm 2xl:text-md font-bold">Цвет</h5>
@@ -133,7 +99,7 @@
                         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                             <div class="flex items-center gap-4">
                                 <div class="flex items-center gap-2">
-                                    <a href="catalog.html"
+                                    <a href="{{ route('catalog') }}"
                                        class="pointer-events-none inline-flex items-center justify-center w-10 h-10 rounded-md bg-card text-pink">
                                         <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                              viewBox="0 0 52 52">
