@@ -12,7 +12,7 @@ final class NavigationComposer
     {
         $menu = Menu::make()
             ->add(MenuItem::make(route('home'), 'Главная'))
-            ->addIf(true, MenuItem::make(route('catalog'), 'Каталог'));
+            ->add(MenuItem::make(route('catalog'), 'Каталог'));
 
         $view->with('menu', $menu);
     }

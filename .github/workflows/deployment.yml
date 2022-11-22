@@ -38,3 +38,14 @@ jobs:
         env:
           DB_PASSWORD: root
         run: vendor/bin/phpunit
+
+      - name: Create deployment artifacts
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        run: tar -czf "${GITHUB_SHA}".tar.gz --exclude=*.git --exclude=node_modules *
+
+      - name: Store artifact for distribution
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-build
+          path: ${{ github.sha }}.tar.gz
