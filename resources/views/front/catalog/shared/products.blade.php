@@ -5,7 +5,7 @@
     </a>
     <div class="grow flex flex-col py-8 px-6">
         <h3 class="text-sm lg:text-md font-black">
-            <a href="{{ route('product') }}" class="inline-block text-white hover:text-pink">{{ $product->title }}</a>
+            <a href="{{ route('product', $product) }}" class="inline-block text-white hover:text-pink">{{ $product->title }}</a>
         </h3>
         <div class="mt-auto pt-6">
             <div class="mb-3 text-sm font-semibold">{{ $product->price }}</div>
