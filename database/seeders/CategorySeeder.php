@@ -2,11 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Product;
-use Database\Factories\OptionFactory;
-use Database\Factories\OptionValueFactory;
-use Database\Factories\PropertyFactory;
+use Database\Factories\Domain\Product\OptionFactory;
+use Database\Factories\Domain\Product\OptionValueFactory;
+use Database\Factories\Domain\Product\ProductFactory;
+use Database\Factories\Domain\Product\PropertyFactory;
 use Domain\Catalog\Models\Category;
+use Domain\Product\Models\Product;
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
@@ -24,7 +25,8 @@ class CategorySeeder extends Seeder
             ->create();
 
         Category::factory(10)
-            ->has(Product::factory(rand(5,15))
+            ->has(ProductFactory::new()
+                ->count(rand(5,15))
                 ->hasAttached($optionsValue)
                 ->hasAttached($properties, fn() => ['value' => ucfirst(fake()->word())])
             )->create();

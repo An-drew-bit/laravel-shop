@@ -5,7 +5,7 @@ namespace Tests\Feature\App\Http\Controllers;
 use App\Http\Controllers\HomeController;
 use Database\Factories\Domain\Catalog\Models\BrandFactory;
 use Database\Factories\Domain\Catalog\Models\CategoryFactory;
-use Database\Factories\ProductFactory;
+use Database\Factories\Domain\Product\ProductFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

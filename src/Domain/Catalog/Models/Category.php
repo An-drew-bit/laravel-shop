@@ -2,9 +2,9 @@
 
 namespace Domain\Catalog\Models;
 
-use App\Models\Product;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Domain\Catalog\Builders\CategoryBuilder;
+use Domain\Product\Models\Product;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

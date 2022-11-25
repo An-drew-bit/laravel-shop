@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Domain\Catalog\Providers\CatalogServiceProvider;
+use Domain\Product\Providers\ProductServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use Domain\User\Providers\AuthServiceProvider;
 
@@ -12,5 +13,6 @@ class DomainServiceProvider extends ServiceProvider
     {
         $this->app->register(AuthServiceProvider::class);
         $this->app->register(CatalogServiceProvider::class);
+        $this->app->register(ProductServiceProvider::class);
     }
 }

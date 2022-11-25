@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Domain\Catalog\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -7,13 +9,11 @@ use Stringable;
 
 abstract class AbstractFilter implements Stringable
 {
-    const KEY = 'filters.';
+    public const FILTER_KEY = 'filters.';
 
-    public function __invoke(Builder $query, $next): void
+    public function __invoke(Builder $query, $next): mixed
     {
-        $this->apply($query);
-
-        $next($query);
+        return $next($this->apply($query));
     }
 
     abstract public function title(): string;
@@ -29,7 +29,7 @@ abstract class AbstractFilter implements Stringable
     public function requestValue(string $index = null, mixed $default = null): mixed
     {
         return request(
-            self::KEY . $this->key() . ($index ? ".$index" : ''),
+            self::FILTER_KEY . $this->key() . ($index ? ".$index" : ''),
             $default
         );
     }

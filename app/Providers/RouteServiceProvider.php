@@ -4,18 +4,18 @@ namespace App\Providers;
 
 use App\Contracts\RouteRegistrar;
 use App\Routing\AppRegistrar;
-use App\Routing\ProductRegistrar;
 use Domain\Catalog\Routing\CatalogRegistrar;
+use Domain\Product\Routing\ProductRegistrar;
 use Domain\User\Routing\AuthRegistrar;
 use Domain\User\Routing\ProfileRegistrar;
 use Domain\User\Routing\VerifyEmailRegistrar;
-use Illuminate\Contracts\Routing\Registrar;
-use RuntimeException;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Contracts\Routing\Registrar;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\RateLimiter;
+use RuntimeException;
 
 class RouteServiceProvider extends ServiceProvider
 {

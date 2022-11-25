@@ -54,11 +54,8 @@
                             <div class="text-pink text-lg md:text-xl font-black">{{ $product->price }}</div>
                         </div>
                         <ul class="sm:max-w-[360px] space-y-2 mt-8">
-                            @foreach($product->properties as $property)
-                                <li class="flex justify-between text-body">
-                                    <strong class="text-white">{{ $property->title }}</strong>
-                                    {{ $property->pivot->value }}
-                                </li>
+                            @foreach($product->json_properties as $property => $value)
+                                <li class="flex justify-between text-body"><strong>{{ $property }}:</strong> {{ $value }}</li>
                             @endforeach
                         </ul>
 
@@ -111,7 +108,7 @@
                 <h2 class="mb-12 text-lg lg:text-[42px] font-black">Просмотренные товары</h2>
                 <!-- Products list -->
                 <div class="products grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-x-8 gap-y-8 lg:gap-y-10 2xl:gap-y-12">
-
+                    @each('front.catalog.shared.product', $also, 'product')
                 </div>
             </section>
 

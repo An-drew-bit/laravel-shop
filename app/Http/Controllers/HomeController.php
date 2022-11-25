@@ -2,24 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use Domain\Catalog\ViewModels\BrandViewModel;
-use Domain\Catalog\ViewModels\CategoryViewModel;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
+use App\View\ViewModels\HomeViewModel;
 
 class HomeController extends Controller
 {
-    public function __invoke(): Application|Factory|View
+    public function __invoke(): HomeViewModel
     {
-        return view('front.home', [
-            'categories' => CategoryViewModel::make()
-                ->homePage(),
-            'brands' => BrandViewModel::make()
-                ->homePage(),
-            'products' => Product::homePage()
-                ->get(),
-        ]);
+        return (new HomeViewModel())
+            ->view('front.home');
     }
 }
