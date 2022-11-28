@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Support\SessionRegenerator;
 
 class AuthenticatedController extends Controller
 {
@@ -21,20 +22,16 @@ class AuthenticatedController extends Controller
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+        SessionRegenerator::run();
 
         flash()->info(__('auth.success_login'));
 
         return to_route('home');
     }
 
-    public function logout(Request $request): RedirectResponse
+    public function logout(): RedirectResponse
     {
-        auth()->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
+        SessionRegenerator::run(fn() => auth()->logout());
 
         flash()->info(__('auth.success_logout'));
 

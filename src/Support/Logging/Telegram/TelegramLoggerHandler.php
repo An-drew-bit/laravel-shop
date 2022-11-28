@@ -24,8 +24,7 @@ class TelegramLoggerHandler extends AbstractProcessingHandler
 
     protected function write(array $record): void
     {
-        if (Schema::hasTable('job')) {
-            dispatch(new TelegramLoggerJob($this->token, $this->chatId, $record['formatted']));
-        }
+        dispatch(new TelegramLoggerJob($this->token, $this->chatId, $record['formatted']))
+            ->delay(now()->addSeconds(15));
     }
 }

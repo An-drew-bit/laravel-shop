@@ -7,6 +7,7 @@ use Domain\User\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Laravel\Socialite\Contracts\User as SocialUser;
 use Services\Socialite\Contract\Social;
+use Support\SessionRegenerator;
 
 class SocialService implements Social
 {
@@ -24,7 +25,7 @@ class SocialService implements Social
 
             dispatch(new AuthSocialJob($user, $password));
 
-            auth()->login($user);
+            SessionRegenerator::run(fn() => auth()->login($user));
 
             return url('/');
 
