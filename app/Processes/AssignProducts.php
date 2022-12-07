@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Processes;
+
+use App\Contracts\OrderProcessContract;
+use Domain\Order\Models\Order;
+
+final class AssignProducts implements OrderProcessContract
+{
+    public function handle(Order $order, $next): mixed
+    {
+        $order->orderItems()
+            ->createMany(
+                cart()->items()->map(function ($item) {
+                    return [
+                        'product_id' => $item->product_id,
+                        'price' => $item->price,
+                        'quantity' => $item->quantity
+                    ];
+                })->toArray()
+            );
+
+        return $next($order);
+    }
+}

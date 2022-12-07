@@ -22,6 +22,9 @@ return new class extends Migration
             $table->unsignedInteger('price')
                 ->default(0);
 
+            $table->unsignedInteger('quantity')
+                ->default(0);
+
             $table->foreignIdFor(Brand::class)
                 ->nullable()
                 ->constrained()

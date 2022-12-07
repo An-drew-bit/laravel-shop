@@ -27,6 +27,7 @@ class Product extends Model
         'brand_id',
         'on_home_page',
         'sorting',
+        'quantity',
         'text',
         'json_properties'
     ];

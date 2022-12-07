@@ -22,8 +22,6 @@ class AuthenticatedController extends Controller
     {
         $request->authenticate();
 
-        SessionRegenerator::run();
-
         flash()->info(__('auth.success_login'));
 
         return to_route('home');

@@ -6,6 +6,7 @@ use App\Contracts\RouteRegistrar;
 use App\Routing\AppRegistrar;
 use Domain\Cart\Routing\CartRegistrar;
 use Domain\Catalog\Routing\CatalogRegistrar;
+use Domain\Order\Routing\OrderRegistrar;
 use Domain\Product\Routing\ProductRegistrar;
 use Domain\User\Routing\AuthRegistrar;
 use Domain\User\Routing\ProfileRegistrar;
@@ -37,6 +38,7 @@ class RouteServiceProvider extends ServiceProvider
         VerifyEmailRegistrar::class,
         CatalogRegistrar::class,
         ProductRegistrar::class,
+        OrderRegistrar::class,
     ];
 
     public function boot(): void

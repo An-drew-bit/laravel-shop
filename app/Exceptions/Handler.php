@@ -44,13 +44,17 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            //
+            if (app()->bound('sentry')) {
+                app('sentry')->captureExeption($e);
+            }
         });
 
         $this->renderable(function (\DomainException $exception) {
             flash()->alert($exception->getMessage());
 
-            return back();
+            return session()->previousUrl()
+                ? back()
+                : to_route('home');
         });
     }
 }

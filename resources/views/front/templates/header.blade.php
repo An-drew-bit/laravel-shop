@@ -14,6 +14,13 @@
 
     @vite(['resources/css/app.css', 'resources/sass/main.sass', 'resources/js/app.js'])
 </head>
+
+@if ($message = flash()->get())
+    <div class="{{ $message->getClass() }} flash">
+        {{ $message->getMessage() }}
+    </div>
+@endif
+
 <body x-data="{ 'showTaskUploadModal': false, 'showTaskEditModal': false }" x-cloak>
 	<header class="header pt-6 xl:pt-12">
 		<div class="container">
@@ -110,13 +117,3 @@
 			</div><!-- /.header-inner -->
 		</div><!-- /.container -->
 	</header>
-
-    <div class="container">
-        <div class="mt-10">
-            @if ($message = flash()->get())
-                <div class="{{ $message->getClass() }}">
-                    {{ $message->getMessage() }}
-                </div>
-            @endif
-        </div>
-    </div>

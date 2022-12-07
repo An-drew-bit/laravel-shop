@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
-use App\Events\AfterSessionRegenerated;
 use App\Listeners\SendEmailNewUserListener;
 use App\Observers\BrandObserver;
 use App\Observers\CategoryObserver;
 use Domain\Cart\CartManager;
 use Domain\Catalog\Models\Brand;
 use Domain\Catalog\Models\Category;
+use Domain\User\Events\AfterSessionRegenerated;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
