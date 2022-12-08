@@ -2,6 +2,7 @@
 
 namespace Domain\Order\States;
 
+use Domain\Order\Enums\OrderStatus;
 use Domain\Order\Events\OrderStatusChanged;
 use Domain\Order\Models\Order;
 use InvalidArgumentException;
@@ -19,7 +20,7 @@ abstract class OrderState
 
     abstract public function canBeChanged(): bool;
 
-    abstract public function value(): string;
+    abstract public function value(): OrderStatus;
 
     abstract public function uiValue(): string;
 

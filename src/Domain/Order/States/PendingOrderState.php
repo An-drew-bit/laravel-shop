@@ -2,6 +2,8 @@
 
 namespace Domain\Order\States;
 
+use Domain\Order\Enums\OrderStatus;
+
 final class PendingOrderState extends OrderState
 {
     protected array $allowedTransitions = [
@@ -14,9 +16,9 @@ final class PendingOrderState extends OrderState
         return true;
     }
 
-    public function value(): string
+    public function value(): OrderStatus
     {
-        return 'pending';
+        return OrderStatus::Pending;
     }
 
     public function uiValue(): string

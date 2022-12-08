@@ -11,6 +11,8 @@ use App\Processes\CheckProductQuantities;
 use App\Processes\ClearCart;
 use App\Processes\DecreaseProductsQuantities;
 use Domain\Order\Actions\Contracts\NewOrderContract;
+use Domain\Order\DTO\OrderCustomerDTO;
+use Domain\Order\DTO\OrderDTO;
 use Domain\Order\Models\DeliveryType;
 use Domain\Order\Models\PaymentMethod;
 use Domain\Order\Processes\OrderProcess;
@@ -39,12 +41,18 @@ class OrderController extends Controller
 
     public function handle(OrderRequest $request, NewOrderContract $contract): RedirectResponse
     {
-        $order = $contract($request);
+        $customer = OrderCustomerDTO::fromArray($request->get('customer'));
+
+        $order = $contract(
+            OrderDTO::make(...$request->only(['payment_method_id', 'delivery_type_id', 'password'])),
+            $customer,
+            $request->boolean('create_account')
+        );
 
         (new OrderProcess($order))
             ->processes([
                 new CheckProductQuantities(),
-                new AssignCustomer(request('customer')),
+                new AssignCustomer($customer),
                 new AssignProducts(),
                 new ChangeStateToPending(),
                 new DecreaseProductsQuantities(),

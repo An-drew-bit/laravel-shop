@@ -2,6 +2,8 @@
 
 namespace Domain\Order\States;
 
+use Domain\Order\Enums\OrderStatus;
+
 final class CancelledOrderState extends OrderState
 {
     protected array $allowedTransitions = [];
@@ -11,9 +13,9 @@ final class CancelledOrderState extends OrderState
         return false;
     }
 
-    public function value(): string
+    public function value(): OrderStatus
     {
-        return 'cancelled';
+        return OrderStatus::Cancelled;
     }
 
     public function uiValue(): string

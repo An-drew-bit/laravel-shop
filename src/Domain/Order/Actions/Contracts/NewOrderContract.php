@@ -2,11 +2,11 @@
 
 namespace Domain\Order\Actions\Contracts;
 
+use Domain\Order\DTO\OrderCustomerDTO;
+use Domain\Order\DTO\OrderDTO;
 use Domain\Order\Models\Order;
-use Illuminate\Foundation\Http\FormRequest;
 
 interface NewOrderContract
 {
-    // todo make dto latter
-    public function __invoke(FormRequest $request): Order;
+    public function __invoke(OrderDTO $data, OrderCustomerDTO $customer, bool $createAccount): Order;
 }

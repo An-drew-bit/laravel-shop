@@ -2,6 +2,8 @@
 
 namespace Domain\Order\States;
 
+use Domain\Order\Enums\OrderStatus;
+
 final class PaidOrderState extends OrderState
 {
     protected array $allowedTransitions = [
@@ -13,9 +15,9 @@ final class PaidOrderState extends OrderState
         return true;
     }
 
-    public function value(): string
+    public function value(): OrderStatus
     {
-        return 'paid';
+        return OrderStatus::Paid;
     }
 
     public function uiValue(): string
