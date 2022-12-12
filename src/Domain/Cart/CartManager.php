@@ -88,15 +88,6 @@ final class CartManager
             ->get();
     }
 
-    public function cartItems(): Collection
-    {
-        if (!$this->getCurrentCart()) {
-            return collect([]);
-        }
-
-        return $this->getCurrentCart()->cartItems;
-    }
-
     public function countItem(): int
     {
         return $this->cartItems()->sum(function ($item) {
@@ -129,6 +120,15 @@ final class CartManager
         Cart::query()
             ->where('storage_id', $old)
             ->update($this->storedData($current));
+    }
+
+    private function cartItems(): Collection
+    {
+        if (!$this->getCurrentCart()) {
+            return collect([]);
+        }
+
+        return $this->getCurrentCart()->cartItems;
     }
 
     private function cacheKey(): string
