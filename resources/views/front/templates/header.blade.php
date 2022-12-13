@@ -74,7 +74,7 @@
                                 </div>
                                 <div class="mt-4">
                                     <ul class="space-y-2">
-                                        <li><a href="#" class="text-body hover:text-white text-xs font-medium">Мои заказы</a></li>
+                                        <li><a href="{{ route('orders.index') }}" class="text-body hover:text-white text-xs font-medium">Мои заказы</a></li>
                                         <li><a href="{{ route('profile.edit', ['user' => auth()->user()]) }}" class="text-body hover:text-white text-xs font-medium">Редактировать профиль</a></li>
                                     </ul>
                                 </div>
