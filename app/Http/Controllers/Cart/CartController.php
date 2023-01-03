@@ -42,7 +42,7 @@ class CartController extends Controller
         return to_route('cart');
     }
 
-    public function delete(CartItem $item)
+    public function delete(CartItem $item): RedirectResponse
     {
         cart()->delete($item);
 
@@ -51,7 +51,7 @@ class CartController extends Controller
         return to_route('cart');
     }
 
-    public function truncate()
+    public function truncate(): RedirectResponse
     {
         cart()->truncate();
 
