@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\Order\OrderWasCreated;
+use App\Listeners\Order\SendEmailCreatedListener;
 use App\Listeners\SendEmailNewUserListener;
 use App\Observers\BrandObserver;
 use App\Observers\CategoryObserver;
@@ -25,6 +27,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
             SendEmailNewUserListener::class,
+        ],
+        OrderWasCreated::class => [
+            SendEmailCreatedListener::class,
         ],
     ];
 

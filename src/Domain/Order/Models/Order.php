@@ -14,6 +14,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Support\Casts\PriceCast;
 
 /**
+ * @property int id
+ * @property int user_id
+ * @property int delivery_type_id
+ * @property int payment_method_id
+ * @property int|float amount
+ * @property string status
+ * @property User user
+ * @property OrderCustomer orderCustomer
+ *
  * @method static Order|Builder query()
  */
 class Order extends Model
