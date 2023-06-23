@@ -2,16 +2,16 @@
 
 namespace Domain\Order\Models;
 
-use Domain\Order\Enums\OrderStatus;
-use Domain\User\Models\User;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Support\Casts\PriceCast;
+use Domain\User\Models\User;
+use Domain\Order\Enums\OrderStatus;
+use Domain\Order\Builder\OrderBuilder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * @property int id
@@ -23,7 +23,7 @@ use Support\Casts\PriceCast;
  * @property User user
  * @property OrderCustomer orderCustomer
  *
- * @method static Order|Builder query()
+ * @method static Order|OrderBuilder query()
  */
 class Order extends Model
 {
@@ -75,5 +75,10 @@ class Order extends Model
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function newEloquentBuilder($query): OrderBuilder
+    {
+        return new OrderBuilder($query);
     }
 }

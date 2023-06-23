@@ -14,8 +14,7 @@ class UserOrderRegistrar implements RouteRegistrar
         Route::middleware('web')->group(function () {
             Route::controller(UserOrderController::class)->group(function () {
 
-                Route::get('/profile/order', 'index')
-                    ->name('orders.index');
+                Route::get('/profile/order')->name('orders.index');
             });
         });
     }
