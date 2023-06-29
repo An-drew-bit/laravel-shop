@@ -20,14 +20,15 @@ class OrderRequest extends FormRequest
             'customer.last_name' => ['required', 'string'],
             'customer.email' => ['required', 'email:dns'],
             'customer.phone' => ['required', new PhoneRule()],
-            'customer.city' => ['sometimes'],
-            'customer.address' => ['sometimes'],
+            'customer.city' => ['required'],
+            'customer.address' => ['required'],
             'create_account' => ['bool'],
             'password' => request()->boolean('create_account')
                 ? ['required', 'confirmed', Password::default()]
                 : ['sometimes'],
             'delivery_type_id' => ['required', 'exists:delivery_types,id'],
             'payment_method_id' => ['required', 'exists:payment_methods,id'],
+            'amount' => ['required', 'integer'],
         ];
     }
 
@@ -38,6 +39,8 @@ class OrderRequest extends FormRequest
             'customer.last_name' => __('customer.last_name'),
             'customer.email' => __('customer.email'),
             'customer.phone' => __('customer.phone'),
+            'customer.city' => __('customer.city'),
+            'customer.address' => __('customer.address'),
         ];
     }
 }

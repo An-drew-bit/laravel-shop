@@ -220,7 +220,10 @@
                             </tbody>
                         </table>
 
-                        <div class="text-xs font-semibold text-right">Всего: {{ cart()->amount() }}</div>
+                        <div class="text-xs font-semibold text-right">
+                            Всего: {{ cart()->amount() }}
+                            <input type="hidden" name="amount" value="{{ cart()->amount() }}">
+                        </div>
 
                         <div class="mt-8 space-y-8">
                             <table class="w-full text-left">

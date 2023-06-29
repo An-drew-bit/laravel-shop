@@ -19,14 +19,15 @@ final class NewOrderActions implements NewOrderContract
             $registerAction(NewUserDTO::make(
                 $customer->fullName(),
                 $customer->email,
-                $data->password,
+                $data->getPassword(),
             ));
         }
 
         return Order::query()->create([
             'user_id' => auth()->id() ?? null,
-            'payment_method_id' => $data->payment_method_id,
-            'delivery_type_id' => $data->delivery_type_id,
+            'payment_method_id' => $data->getPaymentMethodId(),
+            'delivery_type_id' => $data->getDeliveryTypeId(),
+            'amount' => (int) $data->getAmount(),
         ]);
     }
 }

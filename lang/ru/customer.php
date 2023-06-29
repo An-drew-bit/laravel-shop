@@ -5,4 +5,6 @@ return [
     'last_name' => 'Фамилия',
     'email' => 'E-mail',
     'phone' => 'Номер телефона',
+    'city' => 'Город',
+    'address' => 'Адрес',
 ];

@@ -5,4 +5,6 @@ return [
     'last_name' => 'Last name',
     'email' => 'E-mail',
     'phone' => 'Phone number',
+    'city' => 'City',
+    'address' => 'Address',
 ];

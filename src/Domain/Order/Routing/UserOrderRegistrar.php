@@ -12,10 +12,8 @@ class UserOrderRegistrar implements RouteRegistrar
     public function map(Registrar $registrar): void
     {
         Route::middleware('web')->group(function () {
-            Route::controller(UserOrderController::class)->group(function () {
-
-                Route::get('/profile/order')->name('orders.index');
-            });
+            Route::get('/profile/order', UserOrderController::class)
+                ->name('orders.index');
         });
     }
 }

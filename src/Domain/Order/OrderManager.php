@@ -23,7 +23,7 @@ final class OrderManager
         $customer = OrderCustomerDTO::fromArray($request->get('customer'));
 
         $order = $contract(
-            OrderDTO::make(...$request->only(['payment_method_id', 'delivery_type_id', 'password'])),
+            OrderDTO::make(...$request->only(['payment_method_id', 'delivery_type_id', 'password', 'amount'])),
             $customer,
             $request->boolean('create_account')
         );
