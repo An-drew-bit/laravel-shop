@@ -36,6 +36,7 @@ final class OrderManager
                 new ChangeStateToPending(),
                 new DecreaseProductsQuantities(),
                 new ClearCart(),
-            ])->run();
+            ])
+            ->run();
     }
 }

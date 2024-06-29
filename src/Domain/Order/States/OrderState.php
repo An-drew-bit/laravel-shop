@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Domain\Order\States;
 
 use Domain\Order\Enums\OrderStatus;
@@ -9,13 +11,11 @@ use InvalidArgumentException;
 
 abstract class OrderState
 {
-    protected array $allowedTransitions = [
-
-    ];
+    protected array $allowedTransitions = [];
 
     public function __construct(
-        protected Order $order
-    ){
+        protected readonly Order $order,
+    ) {
     }
 
     abstract public function canBeChanged(): bool;

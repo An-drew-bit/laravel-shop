@@ -27,7 +27,7 @@ final class UnitPay implements PaymentGatewayContract
 
     public function configure(array $config): void
     {
-        // TODO: Implement configure() method.
+        $this->client = new UnitPayPayment(...$config);
     }
 
     public function data(PaymentData $data): PaymentGatewayContract
@@ -51,12 +51,32 @@ final class UnitPay implements PaymentGatewayContract
 
     public function url(): string
     {
-        // TODO: Implement url() method.
+        return $this->client->createPayment(
+            $this->paymentData->getId(),
+            $this->paymentData->getAmount()->value(),
+            $this->paymentData->getDescription(),
+            $this->paymentData->getAmount()->currency(),
+            [
+                $this->client->cahsItem(
+                    $this->paymentData->getDescription(),
+                    1,
+                    $this->paymentData->getAmount()->value(),
+                ),
+            ],
+            $this->paymentData->getMeta()->get('email', ''),
+            $this->paymentData->getReturnUrl(),
+            $this->paymentData->getReturnUrl(),
+            $this->paymentData->getMeta()->get('phone', ''),
+        );
     }
 
     public function validate(): bool
     {
-        // TODO: Implement validate() method.
+        return $this->client->handle(
+            $this->paymentData->getAmount()->value(),
+            $this->paymentData->getAmount()->currency(),
+        )
+            ->isPaySuccess();
     }
 
     public function paid(): bool

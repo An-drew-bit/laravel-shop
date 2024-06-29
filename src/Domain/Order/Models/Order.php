@@ -4,6 +4,7 @@ namespace Domain\Order\Models;
 
 use Support\Casts\PriceCast;
 use Domain\User\Models\User;
+use Domain\Order\States\OrderState;
 use Domain\Order\Enums\OrderStatus;
 use Domain\Order\Builder\OrderBuilder;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +20,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int delivery_type_id
  * @property int payment_method_id
  * @property int|float amount
- * @property string status
+ * @property OrderState status
  * @property User user
  * @property OrderCustomer orderCustomer
  *
@@ -34,7 +35,7 @@ class Order extends Model
         'delivery_type_id',
         'payment_method_id',
         'amount',
-        'status'
+        'status',
     ];
 
     protected $casts = [
@@ -42,13 +43,13 @@ class Order extends Model
     ];
 
     protected $attributes = [
-        'status' => 'new'
+        'status' => 'new',
     ];
 
     public function status(): Attribute
     {
         return Attribute::make(
-            get: fn(string $value) => OrderStatus::from($value)->createState($this)
+            get: fn(string $value) => OrderStatus::from($value)->createState($this),
         );
     }
 

@@ -1,15 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
 use Carbon\CarbonInterval;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Http\Kernel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Container\Container;
+use Illuminate\Support\Facades\App;
+use Services\Socialite\SocialService;
+use Illuminate\Foundation\Http\Kernel;
+use Services\Socialite\Contract\Social;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
-use Services\Socialite\Contract\Social;
-use Services\Socialite\SocialService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,9 +24,10 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Model::shouldBeStrict(!app()->isProduction());
+        Model::preventLazyLoading(!App::isProduction());
+        Model::preventSilentlyDiscardingAttributes(!App::isProduction());
 
-        if (app()->isProduction()) {
+        if (App::isProduction()) {
             DB::listen(function ($query) {
                 if ($query->time > 10) {
                     logger()->channel('telegram')
@@ -30,10 +35,13 @@ class AppServiceProvider extends ServiceProvider
                 }
             });
 
-            app(Kernel::class)->whenRequestLifecycleIsLongerThan(
-                CarbonInterval::seconds(4), fn() => logger()
-                ->channel('telegram')
-                ->debug('whenRequestLifecycleIsLongerThan:' . request()->url()));
+            Container::getInstance()
+                ->make(Kernel::class)
+                ->whenRequestLifecycleIsLongerThan(
+                    CarbonInterval::seconds(4), fn() => logger()
+                        ->channel()
+                        ->debug('whenRequestLifecycleIsLongerThan:' . request()->url())
+                );
         }
 
         Password::defaults(fn() => Password::min(8)

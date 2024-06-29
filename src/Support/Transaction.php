@@ -1,21 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Support;
 
 use Closure;
-use Illuminate\Support\Facades\DB;
 use Throwable;
+use Illuminate\Support\Facades\DB;
 
 final class Transaction
 {
     /**
      * @throws Throwable
      */
-    public static function run(
-        Closure $callback,
-        Closure $finished = null,
-        Closure $onError = null,
-    )
+    public static function run(Closure $callback, Closure $finished = null, Closure $onError = null)
     {
         try {
             DB::beginTransaction();
